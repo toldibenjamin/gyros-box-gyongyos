@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="hu">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gyros Box és Smash Point Burger | Friss street food Gyöngyös szívében</title>
+    <meta
+      name="description"
+      content="Gyros Box és Smash Point Burger: friss street food, gyors kiszolgálás, helyben fogyasztás, elvitel és házhozszállítás Gyöngyös központjában."
+    />
+    <link rel="icon" href="logo-gyros-box.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css?v=20260420-navfix-3" />
+  </head>
+  <body>
+    <div class="page-glow page-glow--left" aria-hidden="true"></div>
+    <div class="page-glow page-glow--right" aria-hidden="true"></div>
+
+    <header class="topbar">
+      <button class="brand" type="button" aria-label="Vissza a bemutatkozás elejére">
+        <span class="brand__mark">
+          <img src="logo-gyros-box.svg" alt="" draggable="false" />
+        </span>
+        <span class="brand__text">
+          <strong>Gyros Box</strong>
+          <small>Gyöngyös</small>
+        </span>
+      </button>
+
+      <nav class="nav" aria-label="Fő nézetek" role="tablist">
+        <button
+          class="nav__button is-active"
+          type="button"
+          role="tab"
+          id="tab-intro"
+          aria-controls="panel-intro"
+          aria-selected="true"
+          data-view-target="intro"
+        >
+          Bemutatkozás
+        </button>
+        <button
+          class="nav__button"
+          type="button"
+          role="tab"
+          id="tab-menu"
+          aria-controls="panel-menu"
+          aria-selected="false"
+          tabindex="-1"
+          data-view-target="menu"
+        >
+          Menü
+        </button>
+        <button
+          class="nav__button"
+          type="button"
+          role="tab"
+          id="tab-hours"
+          aria-controls="panel-hours"
+          aria-selected="false"
+          tabindex="-1"
+          data-view-target="hours"
+        >
+          Nyitvatartás
+        </button>
+        <button
+          class="nav__button"
+          type="button"
+          role="tab"
+          id="tab-contact"
+          aria-controls="panel-contact"
+          aria-selected="false"
+          tabindex="-1"
+          data-view-target="contact"
+        >
+          Kapcsolat
+        </button>
+      </nav>
+
+      <button class="nav-cta" type="button" data-view-target="menu">
+        Menü megtekintése
+      </button>
+    </header>
+
+    <main id="top">
+      <section class="section hero" id="hero-stage">
+        <div class="hero__content reveal">
+          <div class="hero-logo" aria-hidden="true">
+            <img src="logo-gyros-box.svg" alt="" draggable="false" />
+          </div>
+          <p class="eyebrow">Gyöngyös street food pontja</p>
+          <h1>Gyros Box és Smash Point Burger</h1>
+          <p class="hero__lead">
+            Friss, gyors, ízletes street food Gyöngyös szívében.
+          </p>
+          <p class="hero__copy">
+            Modern, vendégközpontú gyorsétterem hangulat helyben fogyasztásra,
+            elvitelre és kényelmes rendelésre hangolva. Ha gyors, laktató és
+            megbízható falatokra vágysz a városközpontban, itt jó helyen jársz.
+          </p>
+
+          <div class="hero__tags" aria-label="Szolgáltatások">
+            <span>Helyben fogyasztás</span>
+            <span>Elvitel</span>
+            <span>Házhozszállítás</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section content-stage" id="content-stage">
+        <a class="intro-gallery-cue" href="#panel-intro" aria-label="Görgess lejjebb a belső fotókhoz">
+          <span class="intro-gallery-cue__eyebrow">Belső fotók lentebb</span>
+          <strong>Nézd meg a helyet belülről</strong>
+          <span class="intro-gallery-cue__arrow" aria-hidden="true"></span>
+        </a>
+
+        <div class="view-panels">
+          <section
+            class="view-panel is-active"
+            id="panel-intro"
+            data-view-panel="intro"
+            role="tabpanel"
+            aria-labelledby="tab-intro"
+          >
+            <div class="view-panel__section view-panel__section--gallery">
+              <div class="venue-gallery" aria-label="Gyros Box belső fotógaléria">
+                <button
+                  class="venue-shot venue-shot--side reveal"
+                  type="button"
+                  data-gallery-src="hely-fotok/638166144_826038340450400_8318283968443023016_n.jpg"
+                  data-gallery-alt="Gyros Box belső fotó"
+                  aria-label="Fotó megnyitása"
+                >
+                  <img
+                    src="hely-fotok/638166144_826038340450400_8318283968443023016_n.jpg"
+                    alt="Gyros Box belső fotó"
+                    loading="eager"
+                  />
+                </button>
+
+                <button
+                  class="venue-shot venue-shot--center reveal"
+                  type="button"
+                  data-gallery-src="hely-fotok/638298708_826793850374849_1247325826586211930_n.jpg"
+                  data-gallery-alt="Gyros Box belső fotó"
+                  aria-label="Fotó megnyitása"
+                >
+                  <img
+                    src="hely-fotok/638298708_826793850374849_1247325826586211930_n.jpg"
+                    alt="Gyros Box belső fotó"
+                    loading="lazy"
+                  />
+                </button>
+
+                <button
+                  class="venue-shot venue-shot--side reveal"
+                  type="button"
+                  data-gallery-src="hely-fotok/638302023_826793917041509_6559987343180980006_n.jpg"
+                  data-gallery-alt="Gyros Box belső fotó"
+                  aria-label="Fotó megnyitása"
+                >
+                  <img
+                    src="hely-fotok/638302023_826793917041509_6559987343180980006_n.jpg"
+                    alt="Gyros Box belső fotó"
+                    loading="lazy"
+                  />
+                </button>
+
+                <button
+                  class="venue-shot reveal"
+                  type="button"
+                  data-gallery-src="hely-fotok/638852190_826793897041511_515495655708088527_n.jpg"
+                  data-gallery-alt="Gyros Box belső fotó"
+                  aria-label="Fotó megnyitása"
+                >
+                  <img
+                    src="hely-fotok/638852190_826793897041511_515495655708088527_n.jpg"
+                    alt="Gyros Box belső fotó"
+                    loading="lazy"
+                  />
+                </button>
+
+                <button
+                  class="venue-shot reveal"
+                  type="button"
+                  data-gallery-src="hely-fotok/638852965_826793870374847_9071623345471971741_n.jpg"
+                  data-gallery-alt="Gyros Box belső fotó"
+                  aria-label="Fotó megnyitása"
+                >
+                  <img
+                    src="hely-fotok/638852965_826793870374847_9071623345471971741_n.jpg"
+                    alt="Gyros Box belső fotó"
+                    loading="lazy"
+                  />
+                </button>
+
+                <button
+                  class="venue-shot reveal"
+                  type="button"
+                  data-gallery-src="hely-fotok/638881783_826793947041506_3565468944177823384_n.jpg"
+                  data-gallery-alt="Gyros Box belső fotó"
+                  aria-label="Fotó megnyitása"
+                >
+                  <img
+                    src="hely-fotok/638881783_826793947041506_3565468944177823384_n.jpg"
+                    alt="Gyros Box belső fotó"
+                    loading="lazy"
+                  />
+                </button>
+
+                <button
+                  class="venue-shot reveal"
+                  type="button"
+                  data-gallery-src="hely-fotok/638884210_826038360450398_6376875800512936475_n.jpg"
+                  data-gallery-alt="Gyros Box belső fotó"
+                  aria-label="Fotó megnyitása"
+                >
+                  <img
+                    src="hely-fotok/638884210_826038360450398_6376875800512936475_n.jpg"
+                    alt="Gyros Box belső fotó"
+                    loading="lazy"
+                  />
+                </button>
+              </div>
+
+              <div class="gallery-lightbox" id="gallery-lightbox" hidden aria-hidden="true">
+                <button
+                  class="gallery-lightbox__backdrop"
+                  type="button"
+                  data-gallery-close
+                  tabindex="-1"
+                  aria-label="Bezárás"
+                ></button>
+                <div
+                  class="gallery-lightbox__dialog"
+                  role="dialog"
+                  aria-modal="true"
+                  aria-label="Gyros Box fotó megtekintése"
+                >
+                  <button
+                    class="gallery-lightbox__close"
+                    type="button"
+                    data-gallery-close
+                    aria-label="Bezárás"
+                  >
+                    &times;
+                  </button>
+                  <button
+                    class="gallery-lightbox__nav gallery-lightbox__nav--prev"
+                    type="button"
+                    id="gallery-prev"
+                    aria-label="Előző kép"
+                  ></button>
+                  <figure class="gallery-lightbox__figure">
+                    <img id="gallery-lightbox-image" src="" alt="" />
+                  </figure>
+                  <button
+                    class="gallery-lightbox__nav gallery-lightbox__nav--next"
+                    type="button"
+                    id="gallery-next"
+                    aria-label="Következő kép"
+                  ></button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section
+            class="view-panel"
+            id="panel-menu"
+            data-view-panel="menu"
+            role="tabpanel"
+            aria-labelledby="tab-menu"
+            hidden
+          >
+            <div class="view-panel__section">
+              <div class="section-heading reveal">
+                <p class="eyebrow">Kínálat</p>
+                <h2>Kedvcsináló menü modern, átlátható tálalásban</h2>
+                <p>
+                  Az alábbi kínálatból gyorsan átnézheted az elérhető fogásokat
+                  és az étlap hangulatát.
+                </p>
+              </div>
+
+              <div class="menu-grid" id="menu-grid"></div>
+            </div>
+          </section>
+
+          <section
+            class="view-panel"
+            id="panel-hours"
+            data-view-panel="hours"
+            role="tabpanel"
+            aria-labelledby="tab-hours"
+            hidden
+          >
+            <div class="view-panel__section">
+              <div class="hours-layout">
+                <div class="panel panel--accent hours-hero reveal">
+                  <h2>Heti rend</h2>
+                  <p>
+                    Hétfőtől vasárnapig rendezve az egész heti nyitvatartás,
+                    hogy egy pillantással lásd a mai napot és a heti ritmust.
+                  </p>
+
+                  <div class="status-badge hours-hero__status" id="open-status">
+                    Nyitvatartás betöltése...
+                  </div>
+
+                  <div class="hours-today">
+                    <span class="hours-today__label">Mai nap</span>
+                    <strong id="hours-today-name">Betöltés...</strong>
+                    <span class="hours-today__time" id="hours-today-time">--:--</span>
+                    <small id="hours-today-note">A mai állapot betöltése folyamatban.</small>
+                  </div>
+
+                </div>
+
+                <div class="hours-card reveal">
+                  <div class="hours-card__head">
+                    <strong>Heti nyitvatartás</strong>
+                    <span id="hours-week-caption">Ma: --</span>
+                  </div>
+                  <div class="hours-list" id="hours-list"></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section
+            class="view-panel"
+            id="panel-contact"
+            data-view-panel="contact"
+            role="tabpanel"
+            aria-labelledby="tab-contact"
+            hidden
+          >
+            <div class="view-panel__section">
+              <div class="section-heading section-heading--sub reveal">
+                <p class="eyebrow">Térkép</p>
+              </div>
+
+              <div class="map-layout reveal">
+                <div class="map-embed-card">
+                  <iframe
+                    class="map-embed"
+                    title="Gyros Box és Smash Point Burger Google Térkép"
+                    src="https://www.google.com/maps?q=Gyros+Box+Gy%C3%B6ngy%C3%B6s,+Gy%C3%B6ngy%C3%B6s,+Kossuth+Lajos+u.+5.&z=17&output=embed"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    allowfullscreen
+                  ></iframe>
+                  <div class="map-embed-sensor" id="map-embed-sensor" aria-hidden="true"></div>
+                </div>
+
+                <div class="map-info-card">
+                  <p class="eyebrow">Kapcsolatba lépnél velünk?</p>
+                  <div class="map-info-list">
+                    <div class="map-info-item">
+                      <div class="map-info-item__row">
+                        <span class="map-info-item__icon map-info-item__icon--location" aria-hidden="true">
+                          <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M12 21c-.42 0-.83-.16-1.15-.46-.72-.67-7.1-6.79-7.1-11.63a8.25 8.25 0 1 1 16.5 0c0 4.84-6.38 10.96-7.1 11.63-.32.3-.73.46-1.15.46Z" fill="#EA4335"></path>
+                            <circle cx="12" cy="8.9" r="3.1" fill="#ffffff"></circle>
+                          </svg>
+                        </span>
+                        <div class="map-info-item__content">
+                          <span>Cím</span>
+                          <strong>Gyöngyös, Kossuth Lajos u. 5.</strong>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="map-info-item">
+                      <div class="map-info-item__row">
+                        <span class="map-info-item__icon map-info-item__icon--facebook" aria-hidden="true">
+                          <img src="logo/facebook-exact.jpg" alt="" draggable="false" />
+                        </span>
+                        <div class="map-info-item__content">
+                          <span>Facebook</span>
+                          <a
+                            href="https://www.facebook.com/gyrosboxgyongyos/?locale=hu_HU"
+                            target="_blank"
+                            rel="noreferrer"
+                            >facebook.com/gyrosboxgyongyos</a
+                          >
+                        </div>
+                      </div>
+                    </div>
+                    <div class="map-info-item">
+                      <div class="map-info-item__row">
+                        <span class="map-info-item__icon map-info-item__icon--messenger" aria-hidden="true">
+                          <img src="logo/messenger-exact.jpg" alt="" draggable="false" />
+                        </span>
+                        <div class="map-info-item__content">
+                          <span>Messenger</span>
+                          <a
+                            href="https://m.me/gyrosboxgyongyos"
+                            target="_blank"
+                            rel="noreferrer"
+                            >&Iacute;rj Messengeren</a
+                          >
+                        </div>
+                      </div>
+                    </div>
+                    <div class="map-info-item">
+                      <div class="map-info-item__row">
+                        <span class="map-info-item__icon map-info-item__icon--gmail" aria-hidden="true">
+                          <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M5 18V7.9l3.8 2.85V18H5Z" fill="#4285F4"></path>
+                            <path d="M15.2 18v-7.25L19 7.9V18h-3.8Z" fill="#34A853"></path>
+                            <path d="M5 7.9V6.95C5 5.87 5.87 5 6.95 5h.6L12 8.25 16.45 5h.6C18.13 5 19 5.87 19 6.95v.95L12 13 5 7.9Z" fill="#EA4335"></path>
+                            <path d="M8.8 18v-7.25L12 13l3.2-2.25V18H8.8Z" fill="#ffffff"></path>
+                            <path d="M5 7.9 8.8 10.75V18H5V7.9Z" fill="#C5221F"></path>
+                            <path d="M19 7.9v10h-3.8v-7.25L19 7.9Z" fill="#188038"></path>
+                          </svg>
+                        </span>
+                        <div class="map-info-item__content">
+                          <span>E-mail</span>
+                          <a href="mailto:gyrosboxgyongyos@gmail.com">gyrosboxgyongyos@gmail.com</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="contact-actions">
+                    <div class="contact-pointer-compass" aria-hidden="true">
+                      <div class="contact-pointer-compass__face" id="contact-pointer-compass-face">
+                        <span class="contact-pointer-compass__needle" id="contact-pointer-compass-needle">
+                          <span class="contact-pointer-compass__needle-half contact-pointer-compass__needle-half--red"></span>
+                          <span class="contact-pointer-compass__needle-half contact-pointer-compass__needle-half--dark"></span>
+                          <span class="contact-pointer-compass__needle-core"></span>
+                        </span>
+                      </div>
+                    </div>
+                    <a
+                      class="button button--primary"
+                      href="https://www.google.com/maps/search/?api=1&query=Gyros+Box+Gy%C3%B6ngy%C3%B6s%2C+Gy%C3%B6ngy%C3%B6s%2C+Kossuth+Lajos+u.+5."
+                      target="_blank"
+                      rel="noreferrer"
+                      >Megnyitás Google Térképen</a
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div class="contact-compass reveal" id="contact-compass" aria-label="Kurzor koordináta sáv">
+                <div class="contact-compass__track" id="contact-compass-track">
+                  <span class="contact-compass__grid" aria-hidden="true"></span>
+                  <span class="contact-compass__marker" id="contact-compass-marker" aria-hidden="true"></span>
+                  <span class="contact-compass__readout" id="contact-compass-readout">SE 156&deg;</span>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div>
+        <strong>Gyros Box és Smash Point Burger</strong>
+        <span>Gyöngyös, Kossuth Lajos u. 5.</span>
+      </div>
+      <p>© <span id="year"></span> Gyros Box és Smash Point Burger</p>
+      <small>Helyben fogyasztásra, elvitelre és rendelésre.</small>
+    </footer>
+    <script src="script.js?v=20260420-navfix-3"></script>
+  </body>
+</html>

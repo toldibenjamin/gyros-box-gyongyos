@@ -1,0 +1,16 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(14 15) scale(0.89)">
+    <g transform="translate(116 18)">
+      <path d="M18 12C18 9.79086 19.7909 8 22 8H33C35.2091 8 37 9.79086 37 12V15H18V12Z" stroke="white" stroke-width="3"/>
+      <path d="M28 18L45 27L19 76C17.8383 78.1896 15.2867 79.022 13.097 77.8604L8.67912 75.5172C6.48949 74.3555 5.65712 71.8039 6.81878 69.6143L28 18Z" fill="white"/>
+      <path d="M26 27L40 35" stroke="#050505" stroke-width="3" stroke-linecap="round"/>
+      <path d="M22 36L36 44" stroke="#050505" stroke-width="3" stroke-linecap="round"/>
+      <path d="M18 45L32 53" stroke="#050505" stroke-width="3" stroke-linecap="round"/>
+      <path d="M15 54L28 62" stroke="#050505" stroke-width="3" stroke-linecap="round"/>
+      <path d="M11 63L23 70" stroke="#050505" stroke-width="3" stroke-linecap="round"/>
+      <path d="M31 7C34 2 39 0 44 2" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    </g>
+    <text x="128" y="150" text-anchor="middle" fill="transparent" stroke="white" stroke-width="4.2" font-family="Arial Black, Impact, sans-serif" font-size="66" letter-spacing="1.8">GYROS</text>
+    <text x="128" y="192" text-anchor="middle" fill="white" font-family="Arial Black, Impact, sans-serif" font-size="28" letter-spacing="11">BOX</text>
+  </g>
+</svg>
