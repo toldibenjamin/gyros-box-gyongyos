@@ -1,0 +1,13 @@
+{
+  "name": "gyros-box-google-business-reviews",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Static site with a lightweight Node backend for Google Business Profile reviews.",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
