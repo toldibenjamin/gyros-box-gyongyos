@@ -1,4 +1,4 @@
-const INTRO_ONLY_TOPBAR_PREVIEW = true;
+const INTRO_ONLY_TOPBAR_PREVIEW = false;
 
 const menuData = [
   {
@@ -98,7 +98,6 @@ const SITE_REVIEWS_API_PATH = "/api/site-reviews";
 const SITE_REVIEWS_STORAGE_KEY = "gyros-box-site-reviews";
 const SITE_REVIEWS_RESET_MARKER_KEY = "gyros-box-site-reviews-reset";
 const SITE_REVIEWS_RESET_VERSION = "2026-04-07-clear-tests-2";
-const SITE_THEME_STORAGE_KEY = "gyros-box-site-theme";
 const GOOGLE_REVIEWS_FALLBACK = {
   rating: "4,9",
   totalReviews: "460",
@@ -129,44 +128,6 @@ function canUseLocalStorage() {
   } catch {
     return false;
   }
-}
-
-function getSavedSiteTheme() {
-  if (!canUseLocalStorage()) {
-    return "dark";
-  }
-
-  try {
-    return window.localStorage.getItem(SITE_THEME_STORAGE_KEY) === "light" ? "light" : "dark";
-  } catch {
-    return "dark";
-  }
-}
-
-function saveSiteTheme(theme) {
-  if (!canUseLocalStorage()) {
-    return;
-  }
-
-  try {
-    window.localStorage.setItem(SITE_THEME_STORAGE_KEY, theme);
-  } catch {
-    // Theme persistence is optional.
-  }
-}
-
-function applySiteTheme(theme) {
-  const normalizedTheme = theme === "light" ? "light" : "dark";
-
-  document.body.classList.toggle("theme-light", normalizedTheme === "light");
-  document.body.classList.toggle("theme-dark", normalizedTheme === "dark");
-  document.documentElement.dataset.theme = normalizedTheme;
-
-  document.querySelectorAll(".theme-switch__button").forEach((button) => {
-    const isActive = button.dataset.themeValue === normalizedTheme;
-    button.classList.toggle("is-active", isActive);
-    button.setAttribute("aria-pressed", isActive ? "true" : "false");
-  });
 }
 
 function readLocalSiteReviews() {
@@ -2712,41 +2673,6 @@ function setTopbarScrollState() {
   document.body.classList.toggle("is-scrolled", window.scrollY > 12);
 }
 
-function ensureThemeSwitch(sideActions) {
-  if (!sideActions) {
-    return null;
-  }
-
-  let themeSwitch = sideActions.querySelector(".theme-switch");
-
-  if (!themeSwitch) {
-    themeSwitch = document.createElement("div");
-    themeSwitch.className = "theme-switch";
-    themeSwitch.setAttribute("role", "group");
-    themeSwitch.setAttribute("aria-label", "Oldal stilusa");
-    themeSwitch.innerHTML = `
-      <button class="theme-switch__button" type="button" data-theme-value="light" aria-pressed="false">
-        Feh&eacute;r
-      </button>
-      <button class="theme-switch__button" type="button" data-theme-value="dark" aria-pressed="false">
-        Fekete
-      </button>
-    `;
-    sideActions.append(themeSwitch);
-  }
-
-  themeSwitch.querySelectorAll(".theme-switch__button").forEach((button) => {
-    button.addEventListener("click", () => {
-      const nextTheme = button.dataset.themeValue === "light" ? "light" : "dark";
-      applySiteTheme(nextTheme);
-      saveSiteTheme(nextTheme);
-    });
-  });
-
-  applySiteTheme(getSavedSiteTheme());
-  return themeSwitch;
-}
-
 function initTopbar() {
   enhanceTopbarLayout();
 
@@ -2810,8 +2736,6 @@ function initTopbar() {
   if (navCtaGroup && sideActions && navCtaGroup.parentElement !== sideActions) {
     sideActions.prepend(navCtaGroup);
   }
-
-  ensureThemeSwitch(sideActions);
 
   function closeOrderMenu() {
     if (!orderMenu || !navCta) {
@@ -3117,7 +3041,6 @@ if ("scrollRestoration" in window.history) {
   window.history.scrollRestoration = "manual";
 }
 
-applySiteTheme(getSavedSiteTheme());
 renderMenu();
 initOpeningHoursTicker();
 renderReviews();
