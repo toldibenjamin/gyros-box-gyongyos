@@ -3171,7 +3171,7 @@ function setTopbarScrollState() {
 
 function setMobileOrderVisibility() {
   const isMobile = window.innerWidth <= 700;
-  const shouldShow = isMobile && window.scrollY > Math.min(420, window.innerHeight * 0.48);
+  const shouldShow = isMobile && window.scrollY > Math.min(120, window.innerHeight * 0.18);
   const mobileOrder = document.querySelector(".mobile-order-widget");
 
   document.body.classList.toggle("is-mobile-order-visible", shouldShow);
