@@ -6569,7 +6569,7 @@ body.theme-light .popular-menu__grid {
   }
 
   .hours-countdown__dial {
-    width: 4.35rem;
+    width: 5rem;
   }
 
   .hours-countdown__ring-track,
@@ -6578,12 +6578,17 @@ body.theme-light .popular-menu__grid {
   }
 
   .hours-countdown__time {
-    font-size: 0.82rem;
+    font-size: 0.78rem;
   }
 
   .hours-countdown__unit {
-    font-size: 0.5rem;
+    font-size: 0.48rem;
     letter-spacing: 0.12em;
+  }
+
+  .hours-countdown__dial-core {
+    width: 66%;
+    height: 66%;
   }
 
   .hours-countdown__content {
@@ -6846,6 +6851,10 @@ body.theme-light .popular-menu__grid {
 
   .contact-pointer-compass {
     display: none;
+  }
+
+  .contact-compass {
+    display: none !important;
   }
 
   .map-embed-card {
@@ -7291,5 +7300,164 @@ body.theme-light .popular-menu__grid {
 
   body.has-contact-view .map-embed {
     background: #17110d !important;
+  }
+}
+
+@media (max-width: 700px) {
+  #panel-reviews {
+    padding: 0.55rem !important;
+    border-radius: 24px;
+  }
+
+  #panel-reviews .view-panel__section {
+    width: 100%;
+    padding: 0.55rem 0 0.9rem;
+  }
+
+  .reviews-heading {
+    display: none;
+  }
+
+  .reviews-composer,
+  .reviews-composer.panel {
+    gap: 0.72rem;
+    padding: 0.68rem !important;
+    border-radius: 22px;
+  }
+
+  .reviews-score--refined {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "title"
+      "score";
+    width: 100%;
+    gap: 0.58rem;
+    padding: 0.82rem !important;
+    border-radius: 18px;
+  }
+
+  .reviews-score__topline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .reviews-score--refined .reviews-score__title,
+  .reviews-score--refined .reviews-score__meta,
+  .reviews-score__distribution {
+    display: none !important;
+  }
+
+  .reviews-google-chip {
+    width: 100%;
+    justify-content: center;
+    gap: 0.3rem;
+    padding: 0.52rem 0.62rem;
+    border-radius: 999px;
+    font-size: 0.88rem;
+  }
+
+  .reviews-google-chip__brand {
+    font-size: 0.94rem;
+  }
+
+  .reviews-google-chip__score,
+  .reviews-google-chip__count {
+    font-size: 0.9rem;
+  }
+
+  .reviews-google-chip__stars {
+    font-size: 0.82rem;
+  }
+
+  .reviews-score__stats--refined {
+    grid-area: score;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas:
+      "value stars"
+      "value count";
+    align-items: center;
+    justify-items: start !important;
+    gap: 0.12rem 0.72rem;
+    width: 100%;
+    padding: 0.35rem 0.25rem 0.15rem;
+  }
+
+  .reviews-score--refined .reviews-score__value {
+    grid-area: value;
+    justify-items: start;
+  }
+
+  .reviews-score--refined .reviews-score__value strong {
+    font-size: 2.7rem;
+    line-height: 0.9;
+  }
+
+  .reviews-stars--summary {
+    grid-area: stars;
+    justify-content: flex-start;
+    font-size: 1.06rem;
+  }
+
+  .reviews-score--refined .reviews-score__count {
+    grid-area: count;
+    font-size: 0.9rem;
+  }
+
+  .reviews-form--inline {
+    padding: 0.82rem !important;
+    border-radius: 18px;
+  }
+
+  .reviews-form--inline > .eyebrow {
+    margin-bottom: 0.58rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.16em;
+  }
+
+  .reviews-form--inline .reviews-form__grid {
+    display: grid;
+    grid-template-columns: 1fr !important;
+    gap: 0.62rem;
+  }
+
+  .reviews-form__field span {
+    margin-bottom: 0.28rem;
+    font-size: 0.66rem;
+  }
+
+  .reviews-form__field input,
+  .reviews-form__field textarea {
+    min-height: 2.55rem;
+    padding: 0.62rem 0.72rem;
+    font-size: 0.88rem;
+    border-radius: 13px;
+  }
+
+  .reviews-form__field textarea {
+    min-height: 5.6rem;
+  }
+
+  .reviews-rating-picker-wrap {
+    padding: 0.42rem !important;
+  }
+
+  .reviews-rating-picker__option,
+  .reviews-form--inline .reviews-rating-picker__option {
+    height: 2.28rem !important;
+    min-height: 2.28rem !important;
+  }
+
+  .reviews-form__counter,
+  .reviews-form__message {
+    font-size: 0.76rem;
+  }
+
+  #reviews-submit {
+    min-height: 2.8rem;
+    font-size: 0.96rem;
   }
 }
