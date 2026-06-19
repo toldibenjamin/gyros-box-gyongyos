@@ -8270,30 +8270,30 @@ body.theme-light .popular-menu__grid {
 
 @media (max-width: 700px) {
   .menu-showcase__filters {
-    display: grid !important;
-    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
-    justify-content: stretch !important;
-    align-items: stretch !important;
-    gap: 0.38rem !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 0.46rem !important;
     width: 100% !important;
     max-width: 100% !important;
     margin-inline: auto !important;
-    padding: 0.58rem 0.05rem 0.22rem !important;
+    padding: 0.62rem 0.08rem 0.25rem !important;
   }
 
   .menu-showcase__filter {
-    width: 100% !important;
+    width: auto !important;
     min-width: 0 !important;
-    min-height: 2.62rem !important;
-    padding: 0.38rem 0.28rem !important;
+    min-height: 2.55rem !important;
+    padding: 0.52rem 0.82rem !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
     text-align: center !important;
-    white-space: normal !important;
-    overflow-wrap: anywhere !important;
-    font-size: clamp(0.58rem, 2.25vw, 0.72rem) !important;
-    line-height: 1.05 !important;
+    white-space: nowrap !important;
+    overflow-wrap: normal !important;
+    font-size: 0.82rem !important;
+    line-height: 1 !important;
   }
 }
 
