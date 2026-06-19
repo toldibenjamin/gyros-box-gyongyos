@@ -103,6 +103,88 @@ const GOOGLE_REVIEWS_FALLBACK = {
   totalReviews: "460",
 };
 
+const SITE_VERSION = "v1.4.0";
+const SITE_RELEASES = [
+  {
+    version: "v1.4.0",
+    date: "2026.06.19.",
+    huTitle: "Kétnyelvű oldal és étlap",
+    enTitle: "Bilingual site and menu",
+    huItems: [
+      "Magyar és angol nyelvváltó került a felső lécbe és a mobil menübe.",
+      "Angol módban az étlap nevei, leírásai és allergén címkéi is fordulnak.",
+      "A nyelvváltó nagyobb, stabil zászló ikonokat kapott.",
+    ],
+    enItems: [
+      "Hungarian and English language switcher added to the top bar and mobile menu.",
+      "In English mode, menu names, descriptions and allergen labels are translated.",
+      "The language switcher now uses larger, stable flag icons.",
+    ],
+  },
+  {
+    version: "v1.3.0",
+    date: "2026.06.19.",
+    huTitle: "Mobil rendelés és menü javítás",
+    enTitle: "Mobile ordering and menu polish",
+    huItems: [
+      "Telefonon a Rendelés leadása gomb mindig látható lett.",
+      "A Foodora és Wolt opciók a rendelés gomb fölött nyílnak meg.",
+      "A mobil menü keskenyebb, egymás alatti gombos elrendezést kapott.",
+    ],
+    enItems: [
+      "The Order button is now always visible on mobile.",
+      "Foodora and Wolt options open above the order button.",
+      "The mobile menu now uses a narrower stacked layout.",
+    ],
+  },
+  {
+    version: "v1.2.0",
+    date: "2026.06.19.",
+    huTitle: "Telefonos nézet finomítások",
+    enTitle: "Mobile view improvements",
+    huItems: [
+      "Kompaktabb lett a nyitvatartás és a vélemények blokk telefonon.",
+      "A kapcsolat oldal új háttérképeket és tisztább mobil elrendezést kapott.",
+      "A 360 fokos csúszka telefonon el lett rejtve.",
+    ],
+    enItems: [
+      "Opening hours and reviews became more compact on mobile.",
+      "The contact page received new backgrounds and a cleaner mobile layout.",
+      "The 360-degree slider is hidden on mobile.",
+    ],
+  },
+  {
+    version: "v1.1.0",
+    date: "2026.06.19.",
+    huTitle: "Új bemutatkozó rész",
+    enTitle: "New intro section",
+    huItems: [
+      "A főcím Gyros Box Gyöngyös névre változott.",
+      "A kezdő kép nagyobb, nyújtottabb és enyhén homályos lett.",
+      "A bemutatkozó szöveg rövidebb, tisztább megfogalmazást kapott.",
+    ],
+    enItems: [
+      "The main title changed to Gyros Box Gyöngyös.",
+      "The hero image became larger, taller and slightly blurred.",
+      "The intro copy was shortened and cleaned up.",
+    ],
+  },
+  {
+    version: "v1.0.0",
+    date: "2026.06.19.",
+    huTitle: "Weboldal indulás",
+    enTitle: "Website launch",
+    huItems: [
+      "Elindult a Gyros Box Gyöngyös bemutató weboldal.",
+      "Bekerült a menü, nyitvatartás, vélemények és kapcsolat rész.",
+    ],
+    enItems: [
+      "The Gyros Box Gyöngyös showcase website launched.",
+      "Menu, opening hours, reviews and contact sections were added.",
+    ],
+  },
+];
+
 let googleReviewsSnapshot = {
   placeName: "Gyros Box Gy&ouml;ngy&ouml;s",
   rating: GOOGLE_REVIEWS_FALLBACK.rating,
@@ -187,6 +269,10 @@ const I18N = {
     footerSmall: "Helyben fogyaszt&aacute;sra, elvitelre &eacute;s rendel&eacute;sre.",
     foodoraSmall: "Gyros Box Gy&ouml;ngy&ouml;s",
     woltSmall: "Gyros Box oldal",
+    versionButton: "Verzi&oacute;",
+    versionEyebrow: "Weboldal friss&iacute;t&eacute;sek",
+    versionTitle: "Gyros Box Gy&ouml;ngy&ouml;s verzi&oacute;",
+    currentVersion: "Aktu&aacute;lis verzi&oacute;",
   },
   en: {
     title: "Gyros Box Gy\u00f6ngy\u00f6s | Fresh street food in the heart of Gy\u00f6ngy\u00f6s",
@@ -245,6 +331,10 @@ const I18N = {
     footerSmall: "For dine-in, takeaway and ordering.",
     foodoraSmall: "Gyros Box Gy&ouml;ngy&ouml;s",
     woltSmall: "Gyros Box page",
+    versionButton: "Version",
+    versionEyebrow: "Website updates",
+    versionTitle: "Gyros Box Gy&ouml;ngy&ouml;s version",
+    currentVersion: "Current version",
   },
 };
 
@@ -3073,8 +3163,6 @@ function applyLanguage() {
   setHtml('label[for="reviews-rating"] > span', getText("rating"));
   setHtml('label[for="reviews-text"] > span', getText("review"));
   setHtml("#reviews-submit", getText("submit"));
-  setHtml(".footer small", getText("footerSmall"));
-
   document.querySelectorAll(".mobile-order-text small").forEach((item, index) => {
     item.innerHTML = index === 0 ? getText("foodoraSmall") : getText("woltSmall");
   });
@@ -3105,6 +3193,10 @@ function applyLanguage() {
 
   if (typeof syncReviewsSnapshotToDom === "function") {
     syncReviewsSnapshotToDom();
+  }
+
+  if (typeof renderVersionPanel === "function") {
+    renderVersionPanel();
   }
 }
 
@@ -3169,6 +3261,18 @@ function enhanceHeroActions() {
 
 function setTopbarScrollState() {
   document.body.classList.toggle("is-scrolled", window.scrollY > 12);
+}
+
+function setMobileOrderVisibility() {
+  const isMobile = window.innerWidth <= 700;
+  const shouldShow = isMobile && window.scrollY > Math.min(420, window.innerHeight * 0.48);
+  const mobileOrder = document.querySelector(".mobile-order-widget");
+
+  document.body.classList.toggle("is-mobile-order-visible", shouldShow);
+
+  if (!shouldShow && mobileOrder instanceof HTMLDetailsElement) {
+    mobileOrder.open = false;
+  }
 }
 
 function initTopbar() {
@@ -3301,10 +3405,12 @@ function initTopbar() {
 
     closeOrderMenu();
     setTopbarScrollState();
+    setMobileOrderVisibility();
   }
 
   window.addEventListener("resize", syncTopbarState);
   window.addEventListener("scroll", setTopbarScrollState, { passive: true });
+  window.addEventListener("scroll", setMobileOrderVisibility, { passive: true });
   syncTopbarState();
 }
 
@@ -3416,6 +3522,97 @@ function setYear() {
   if (year) {
     year.textContent = new Date().getFullYear();
   }
+}
+
+function renderVersionPanel() {
+  const versionButton = document.querySelector("[data-version-open]");
+  const versionLabel = document.querySelector("[data-version-label]");
+  const currentVersion = document.querySelector("[data-version-current]");
+  const currentLabel = document.querySelector("[data-version-current-label]");
+  const eyebrow = document.querySelector("[data-version-eyebrow]");
+  const title = document.querySelector("[data-version-title]");
+  const body = document.querySelector("[data-version-body]");
+
+  if (versionButton) {
+    versionButton.innerHTML = `${getText("versionButton")} <span data-version-label>${SITE_VERSION}</span>`;
+  }
+
+  if (versionLabel) {
+    versionLabel.textContent = SITE_VERSION;
+  }
+
+  if (currentVersion) {
+    currentVersion.textContent = SITE_VERSION;
+  }
+
+  if (currentLabel) {
+    currentLabel.innerHTML = getText("currentVersion");
+  }
+
+  if (eyebrow) {
+    eyebrow.innerHTML = getText("versionEyebrow");
+  }
+
+  if (title) {
+    title.innerHTML = getText("versionTitle");
+  }
+
+  if (body) {
+    body.innerHTML = SITE_RELEASES.map((release) => {
+      const heading = currentLanguage === "en" ? release.enTitle : release.huTitle;
+      const items = currentLanguage === "en" ? release.enItems : release.huItems;
+
+      return `
+        <article class="version-entry">
+          <div class="version-entry__head">
+            <strong>${release.version}</strong>
+            <span>${release.date}</span>
+          </div>
+          <h3>${heading}</h3>
+          <ul>
+            ${items.map((item) => `<li>${item}</li>`).join("")}
+          </ul>
+        </article>
+      `;
+    }).join("");
+  }
+}
+
+function initVersionModal() {
+  const modal = document.getElementById("version-modal");
+  const openButton = document.querySelector("[data-version-open]");
+  const closeButtons = document.querySelectorAll("[data-version-close]");
+
+  if (!modal || !openButton) {
+    return;
+  }
+
+  function openVersionModal() {
+    renderVersionPanel();
+    modal.hidden = false;
+    modal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("has-version-modal");
+  }
+
+  function closeVersionModal() {
+    modal.hidden = true;
+    modal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("has-version-modal");
+    openButton.focus();
+  }
+
+  openButton.addEventListener("click", openVersionModal);
+  closeButtons.forEach((button) => {
+    button.addEventListener("click", closeVersionModal);
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !modal.hidden) {
+      closeVersionModal();
+    }
+  });
+
+  renderVersionPanel();
 }
 
 function initContactCompass() {
@@ -3553,6 +3750,7 @@ enhanceHeroActions();
 applyIntroOnlyTopbarPreview();
 initTopbar();
 applyLanguage();
+initVersionModal();
 initReveal();
 initGalleryLightbox();
 initViews();
