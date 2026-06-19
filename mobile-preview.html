@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="hu">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Telefonos nézet | Gyros Box Gyöngyös</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: #0f0b09;
+        color: #f8f2ea;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        background:
+          radial-gradient(circle at top left, rgba(255, 171, 61, 0.18), transparent 32%),
+          linear-gradient(180deg, #140e0a 0%, #0d0907 100%);
+      }
+
+      .preview-shell {
+        display: grid;
+        gap: 14px;
+        justify-items: center;
+      }
+
+      .preview-title {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 800;
+      }
+
+      .phone-frame {
+        width: min(390px, calc(100vw - 32px));
+        height: min(844px, calc(100vh - 96px));
+        min-height: 620px;
+        overflow: hidden;
+        border: 10px solid #1d1714;
+        border-radius: 34px;
+        background: #050403;
+        box-shadow:
+          0 32px 90px rgba(0, 0, 0, 0.52),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+      }
+
+      iframe {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        background: #100b08;
+      }
+
+      .preview-link {
+        color: #ffc66a;
+        font-size: 14px;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .preview-link:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="preview-shell">
+      <p class="preview-title">Telefonos előnézet</p>
+      <div class="phone-frame">
+        <iframe src="index.html?v=phone-preview" title="Gyros Box Gyöngyös telefonos előnézet"></iframe>
+      </div>
+      <a class="preview-link" href="index.html">Normál gépes nézet megnyitása</a>
+    </main>
+  </body>
+</html>
