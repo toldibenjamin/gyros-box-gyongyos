@@ -104,7 +104,7 @@ const GOOGLE_REVIEWS_FALLBACK = {
 };
 
 let googleReviewsSnapshot = {
-  placeName: "Gyros Box &eacute;s Smash Point Burger",
+  placeName: "Gyros Box Gy&ouml;ngy&ouml;s",
   rating: GOOGLE_REVIEWS_FALLBACK.rating,
   totalReviews: GOOGLE_REVIEWS_FALLBACK.totalReviews,
   reviewsUrl: "https://www.google.com/search?q=Gyros+Box+Gy%C3%B6ngy%C3%B6s+v%C3%A9lem%C3%A9nyek",
@@ -1924,7 +1924,7 @@ function renderMenu() {
 
             <div class="menu-hero__copy">
               <p class="menu-hero__eyebrow">Online &eacute;tlap</p>
-              <h2>Gyros Box &eacute;s Smash Point Burger</h2>
+              <h2>Gyros Box Gy&ouml;ngy&ouml;s</h2>
               <p class="menu-hero__lead">Friss alapanyagokb&oacute;l, gyorsan, helyben elk&eacute;sz&iacute;tve!</p>
             </div>
           </div>
@@ -2718,7 +2718,7 @@ function initTopbar() {
         <span class="order-link__logo order-link__logo--foodora">foodora</span>
         <span class="order-link__text">
           <strong>Foodora</strong>
-          <span>Gyros Box &eacute;s Smash Point Burger</span>
+          <span>Gyros Box Gy&ouml;ngy&ouml;s</span>
         </span>
       </a>
       <a class="order-link" href="https://wolt.com/hu/hun/gyongyos/restaurant/gyros-box-es-smash-point-burger" target="_blank" rel="noreferrer">
