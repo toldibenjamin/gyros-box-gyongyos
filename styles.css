@@ -6569,7 +6569,7 @@ body.theme-light .popular-menu__grid {
   }
 
   .hours-countdown__dial {
-    width: 5rem;
+    width: 4.85rem;
   }
 
   .hours-countdown__ring-track,
@@ -6578,17 +6578,30 @@ body.theme-light .popular-menu__grid {
   }
 
   .hours-countdown__time {
-    font-size: 0.78rem;
+    max-width: 3.6rem;
+    overflow: hidden;
+    font-size: 0.68rem;
+    line-height: 1;
+    letter-spacing: 0;
+    text-align: center;
+    white-space: nowrap;
   }
 
   .hours-countdown__unit {
-    font-size: 0.48rem;
-    letter-spacing: 0.12em;
+    font-size: 0.44rem;
+    letter-spacing: 0.1em;
+    text-align: center;
   }
 
   .hours-countdown__dial-core {
-    width: 66%;
-    height: 66%;
+    width: 70%;
+    height: 70%;
+    display: grid;
+    place-items: center;
+    align-content: center;
+    justify-items: center;
+    gap: 0.18rem;
+    padding: 0.15rem;
   }
 
   .hours-countdown__content {
