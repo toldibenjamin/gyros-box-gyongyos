@@ -20,8 +20,8 @@
         min-height: 100vh;
         margin: 0;
         display: grid;
-        place-items: center;
-        padding: 24px;
+        place-items: start center;
+        padding: 14px 24px 24px;
         background:
           radial-gradient(circle at top left, rgba(255, 171, 61, 0.18), transparent 32%),
           linear-gradient(180deg, #140e0a 0%, #0d0907 100%);
@@ -40,9 +40,9 @@
       }
 
       .phone-frame {
-        width: min(390px, calc(100vw - 32px));
-        height: min(844px, calc(100vh - 96px));
-        min-height: 620px;
+        width: min(430px, calc(100vw - 48px));
+        height: min(900px, calc(100vh - 92px));
+        min-height: 760px;
         overflow: hidden;
         border: 10px solid #1d1714;
         border-radius: 34px;
@@ -58,6 +58,12 @@
         height: 100%;
         border: 0;
         background: #100b08;
+      }
+
+      @media (max-height: 840px) {
+        .phone-frame {
+          min-height: 680px;
+        }
       }
 
       .preview-link {
