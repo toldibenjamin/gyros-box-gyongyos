@@ -2279,7 +2279,8 @@ function renderMenu() {
     `;
   }
 
-  function renderActiveCategory(activeCategoryId) {
+  function renderActiveCategory(activeCategoryId, options = {}) {
+    const filtersScrollLeft = Number.isFinite(options.filtersScrollLeft) ? options.filtersScrollLeft : 0;
     const activeCategory =
       menuShowcaseCategories.find((category) => category.id === activeCategoryId) || menuShowcaseCategories[0];
     const categoryCollection = menuShowcaseCollections[activeCategory.id];
@@ -2422,9 +2423,21 @@ function renderMenu() {
 
     menuGrid.querySelectorAll("[data-menu-category]").forEach((button) => {
       button.addEventListener("click", () => {
-        renderActiveCategory(button.dataset.menuCategory);
+        const filters = button.closest(".menu-showcase__filters");
+        renderActiveCategory(button.dataset.menuCategory, {
+          filtersScrollLeft: filters ? filters.scrollLeft : 0,
+        });
       });
     });
+
+    if (filtersScrollLeft > 0) {
+      requestAnimationFrame(() => {
+        const filters = menuGrid.querySelector(".menu-showcase__filters");
+        if (filters) {
+          filters.scrollLeft = filtersScrollLeft;
+        }
+      });
+    }
 
     translateMenuTextNodesToEnglish(menuGrid);
   }
