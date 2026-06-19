@@ -8348,3 +8348,229 @@ body.theme-light .popular-menu__grid {
   }
 }
 
+#panel-menu .menu-hero__cta {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  body[data-view="menu"] .topbar__inner {
+    min-height: 4.65rem !important;
+    padding: 0.55rem 0.85rem !important;
+  }
+
+  body[data-view="menu"] .brand__mark {
+    width: 3.8rem !important;
+  }
+
+  body[data-view="menu"] .nav-toggle {
+    width: 2.95rem !important;
+    height: 2.95rem !important;
+  }
+
+  #panel-menu .view-panel__section {
+    padding-top: 0 !important;
+  }
+
+  #panel-menu .section-heading {
+    margin-bottom: 0.45rem !important;
+  }
+
+  #panel-menu .menu-grid {
+    gap: 0.62rem !important;
+  }
+
+  #panel-menu .menu-hero {
+    width: calc(100vw - 14px) !important;
+    margin-left: calc(50% - 50vw + 7px) !important;
+    margin-right: calc(50% - 50vw + 7px) !important;
+  }
+
+  #panel-menu .menu-hero__banner {
+    min-height: 10.6rem !important;
+    padding: 0.72rem 0.82rem !important;
+    border-radius: 19px 19px 0 0 !important;
+    background-position: center 42% !important;
+  }
+
+  #panel-menu .menu-hero__overlay {
+    background:
+      linear-gradient(180deg, rgba(7, 5, 4, 0.12) 0%, rgba(7, 5, 4, 0.18) 43%, rgba(4, 3, 2, 0.56) 100%),
+      radial-gradient(circle at 18% 18%, rgba(255, 191, 99, 0.13), transparent 38%) !important;
+    backdrop-filter: blur(1px) !important;
+  }
+
+  #panel-menu .menu-hero__content {
+    min-height: 8.9rem !important;
+    align-items: flex-end !important;
+    gap: 0.55rem !important;
+  }
+
+  #panel-menu .menu-hero__brand {
+    width: 3.35rem !important;
+    height: 3.35rem !important;
+    border-radius: 16px !important;
+  }
+
+  #panel-menu .menu-hero__copy {
+    gap: 0.28rem !important;
+  }
+
+  #panel-menu .menu-hero__eyebrow {
+    width: max-content !important;
+    max-width: 100% !important;
+    padding: 0.32rem 0.62rem !important;
+    border-radius: 999px !important;
+    background: rgba(13, 11, 10, 0.62) !important;
+    font-size: 0.62rem !important;
+  }
+
+  #panel-menu .menu-hero__copy h2 {
+    max-width: 15.5rem !important;
+    font-size: clamp(1.65rem, 8.4vw, 2.35rem) !important;
+    line-height: 0.94 !important;
+  }
+
+  #panel-menu .menu-hero__lead {
+    max-width: 15.8rem !important;
+    font-size: 0.76rem !important;
+    line-height: 1.25 !important;
+  }
+
+  #panel-menu .menu-hero__cta {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: max-content !important;
+    max-width: 100% !important;
+    min-height: 2.25rem !important;
+    margin-top: 0.18rem !important;
+    padding: 0.55rem 0.95rem !important;
+    border-radius: 999px !important;
+    background: linear-gradient(135deg, #ffd174 0%, #ff9638 100%) !important;
+    color: #120d08 !important;
+    font-size: 0.82rem !important;
+    font-weight: 900 !important;
+    text-decoration: none !important;
+    box-shadow: 0 14px 28px rgba(255, 140, 40, 0.22) !important;
+    user-select: none !important;
+  }
+
+  #panel-menu .menu-hero__meta {
+    padding: 0.38rem 0.44rem 0.44rem !important;
+    gap: 0.24rem !important;
+  }
+
+  #panel-menu .menu-hero__meta span {
+    padding: 0.22rem 0.32rem !important;
+    font-size: 0.57rem !important;
+  }
+
+  #panel-menu .menu-showcase {
+    gap: 0.55rem !important;
+  }
+
+  #panel-menu .menu-showcase__filters {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    width: calc(100vw - 14px) !important;
+    max-width: none !important;
+    margin-inline: calc(50% - 50vw + 7px) !important;
+    padding: 0.5rem 0.7rem 0.42rem !important;
+    gap: 0.46rem !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x proximity !important;
+    -webkit-overflow-scrolling: touch !important;
+    border-block: 1px solid rgba(255, 255, 255, 0.055) !important;
+    background: rgba(7, 5, 4, 0.42) !important;
+  }
+
+  #panel-menu .menu-showcase__filters::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  #panel-menu .menu-showcase__filter {
+    flex: 0 0 auto !important;
+    min-height: 2.35rem !important;
+    padding: 0.54rem 0.86rem !important;
+    border-radius: 999px !important;
+    font-size: 0.8rem !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    scroll-snap-align: start !important;
+  }
+
+  #panel-menu .popular-menu__grid,
+  #panel-menu .popular-menu__grid--collection {
+    gap: 0.78rem !important;
+  }
+
+  #panel-menu .popular-card {
+    gap: 0.52rem !important;
+  }
+
+  #panel-menu .popular-card__media {
+    aspect-ratio: 1.72 / 1 !important;
+    border-radius: 15px !important;
+  }
+
+  #panel-menu .popular-card__copy h4 {
+    font-size: 1rem !important;
+    line-height: 1.02 !important;
+  }
+
+  #panel-menu .popular-card__copy p:not(.popular-card__allergens) {
+    -webkit-line-clamp: 2 !important;
+    font-size: 0.77rem !important;
+    line-height: 1.32 !important;
+  }
+}
+
+@media (max-width: 700px) {
+  #panel-menu .menu-hero__content {
+    align-items: center !important;
+    justify-content: flex-start !important;
+    flex-direction: row !important;
+    min-height: 9.2rem !important;
+    gap: 0.7rem !important;
+  }
+
+  #panel-menu .menu-hero__brand {
+    align-self: flex-start !important;
+    flex: 0 0 auto !important;
+    margin: 0.35rem 0 0 !important;
+  }
+
+  #panel-menu .menu-hero__copy {
+    justify-items: start !important;
+    text-align: left !important;
+    max-width: min(19rem, calc(100vw - 7.2rem)) !important;
+    gap: 0.18rem !important;
+  }
+
+  #panel-menu .menu-hero__copy h2 {
+    display: block !important;
+    max-width: 100% !important;
+    font-size: clamp(1.75rem, 8.4vw, 2.55rem) !important;
+    line-height: 0.96 !important;
+  }
+
+  #panel-menu .menu-hero__eyebrow,
+  #panel-menu .menu-hero__lead {
+    text-align: left !important;
+  }
+
+  #panel-menu .menu-hero__lead {
+    max-width: 100% !important;
+    margin-top: 0 !important;
+    font-size: 0.72rem !important;
+    line-height: 1.22 !important;
+  }
+
+  #panel-menu .menu-hero__cta {
+    display: none !important;
+  }
+}
+

@@ -2305,7 +2305,7 @@ function renderMenu() {
     `;
 
     const popularMarkup = `
-      <div class="popular-menu">
+      <div id="menu-items-start" class="popular-menu">
         <div class="popular-menu__grid">
           ${popularMenuItems
             .map(
@@ -2341,7 +2341,7 @@ function renderMenu() {
 
     const collectionMarkup = categoryCollection
       ? `
-        <div class="popular-menu popular-menu--collection${isCompactDrinkCategory ? " popular-menu--drinks" : ""}">
+        <div id="menu-items-start" class="popular-menu popular-menu--collection${isCompactDrinkCategory ? " popular-menu--drinks" : ""}">
           <div class="popular-menu__grid popular-menu__grid--collection${isCompactDrinkCategory ? " popular-menu__grid--drinks" : ""}">
             ${categoryCollection.items
               .map(
@@ -2393,7 +2393,7 @@ function renderMenu() {
             : categoryCollection
               ? collectionMarkup
             : `
-              <div class="menu-showcase__items">
+              <div id="menu-items-start" class="menu-showcase__items">
                 ${menuShowcaseSlots
                   .map(
                     (slot, index) => `
