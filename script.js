@@ -119,6 +119,167 @@ const reviewSortOptions = [
 
 let reviewsData = [];
 
+const LANGUAGE_STORAGE_KEY = "gyros-box-language";
+const DAY_LABELS_EN = {
+  "h\u00e9tf\u0151": "Monday",
+  kedd: "Tuesday",
+  szerda: "Wednesday",
+  "cs\u00fct\u00f6rt\u00f6k": "Thursday",
+  "p\u00e9ntek": "Friday",
+  szombat: "Saturday",
+  "vas\u00e1rnap": "Sunday",
+};
+const I18N = {
+  hu: {
+    title: "Gyros Box Gy\u00f6ngy\u00f6s | Friss street food Gy\u00f6ngy\u00f6s sz\u00edv\u00e9ben",
+    description:
+      "Gyros Box Gy\u00f6ngy\u00f6s: friss street food, gyors kiszolg\u00e1l\u00e1s, helyben fogyaszt\u00e1s, elvitel \u00e9s h\u00e1zhozsz\u00e1ll\u00edt\u00e1s Gy\u00f6ngy\u00f6s k\u00f6zpontj\u00e1ban.",
+    preview: "Telefonos n&eacute;zet",
+    navIntro: "Bemutatkoz&aacute;s",
+    navMenu: "Men&uuml;",
+    navHours: "Nyitvatart&aacute;s",
+    navReviews: "V&eacute;lem&eacute;nyek",
+    navContact: "Kapcsolat",
+    order: "Rendel&eacute;s lead&aacute;sa",
+    languageLabel: "Nyelv",
+    heroEyebrow: "Gy&ouml;ngy&ouml;s street food",
+    heroLead: "Friss, gyors, &iacute;zletes street food Gy&ouml;ngy&ouml;s sz&iacute;v&eacute;ben.",
+    heroCopy:
+      "Gyors, friss &eacute;s laktat&oacute; gyros a v&aacute;rosk&ouml;zpontban &ndash; helyben fogyaszt&aacute;sra vagy elvitelre, megb&iacute;zhat&oacute; &iacute;zekkel.",
+    menuButton: "Men&uuml; megtekint&eacute;se",
+    contactButton: "T&eacute;rk&eacute;p &eacute;s kapcsolat",
+    dineIn: "Helyben fogyaszt&aacute;s",
+    takeaway: "Elvitel",
+    delivery: "H&aacute;zhozsz&aacute;ll&iacute;t&aacute;s",
+    cueEyebrow: "Bels&#337; fot&oacute;k lentebb",
+    cueTitle: "N&eacute;zd meg a helyet bel&uuml;lr&#337;l",
+    hoursTitle: "Heti rend",
+    hoursIntro:
+      "H&eacute;tf&#337;t&#337;l vas&aacute;rnapig rendezve az eg&eacute;sz heti nyitvatart&aacute;s, hogy egy pillant&aacute;ssal l&aacute;sd a mai napot &eacute;s a heti ritmust.",
+    hoursWeekly: "Heti nyitvatart&aacute;s",
+    today: "Ma",
+    todayLabel: "Mai nap",
+    open: "Nyitva",
+    closed: "Z&aacute;rva",
+    nowOpen: "Most nyitva",
+    nextOpening: "K&ouml;vetkez&#337; nyit&aacute;s",
+    closesIn: "z&aacute;r&aacute;sig",
+    opensIn: "nyit&aacute;sig",
+    openUntil: "-ig nyitva",
+    openAt: "-kor nyitunk",
+    loadingHours: "Nyitvatart&aacute;s bet&ouml;lt&eacute;se...",
+    contactMap: "T&eacute;rk&eacute;p",
+    contactTitle: "Kapcsolatba l&eacute;pn&eacute;l vel&uuml;nk?",
+    address: "C&iacute;m",
+    messenger: "&Iacute;rj Messengeren",
+    email: "E-mail",
+    openMap: "Megnyit&aacute;s Google T&eacute;rk&eacute;pen",
+    reviewsEyebrow: "Vend&eacute;gv&eacute;lem&eacute;nyek",
+    reviewsSummary: "V&eacute;lem&eacute;nyek &ouml;sszefoglal&aacute;sa",
+    reviewsCount: "v&eacute;lem&eacute;ny",
+    reviewsUnchecked: "A v&eacute;lem&eacute;nyek nincsenek ellen&#337;rizve",
+    ownReview: "Saj&aacute;t v&eacute;lem&eacute;ny",
+    name: "N&eacute;v",
+    rating: "&Eacute;rt&eacute;kel&eacute;s",
+    review: "V&eacute;lem&eacute;ny",
+    reviewPlaceholder: "&Iacute;rd meg p&aacute;r mondatban, milyen volt.",
+    submit: "K&uuml;ld&eacute;s",
+    footerSmall: "Helyben fogyaszt&aacute;sra, elvitelre &eacute;s rendel&eacute;sre.",
+    foodoraSmall: "Gyros Box Gy&ouml;ngy&ouml;s",
+    woltSmall: "Gyros Box oldal",
+  },
+  en: {
+    title: "Gyros Box Gy\u00f6ngy\u00f6s | Fresh street food in the heart of Gy\u00f6ngy\u00f6s",
+    description:
+      "Gyros Box Gy\u00f6ngy\u00f6s: fresh street food, fast service, dine-in, takeaway and delivery in downtown Gy\u00f6ngy\u00f6s.",
+    preview: "Phone preview",
+    navIntro: "About",
+    navMenu: "Menu",
+    navHours: "Opening hours",
+    navReviews: "Reviews",
+    navContact: "Contact",
+    order: "Order now",
+    languageLabel: "Language",
+    heroEyebrow: "Gy&ouml;ngy&ouml;s street food",
+    heroLead: "Fresh, fast and tasty street food in the heart of Gy&ouml;ngy&ouml;s.",
+    heroCopy:
+      "Fast, fresh and filling gyros in the city center &ndash; for dine-in or takeaway, with reliable flavors.",
+    menuButton: "View menu",
+    contactButton: "Map and contact",
+    dineIn: "Dine-in",
+    takeaway: "Takeaway",
+    delivery: "Delivery",
+    cueEyebrow: "Interior photos below",
+    cueTitle: "Take a look inside",
+    hoursTitle: "Weekly schedule",
+    hoursIntro:
+      "Opening hours from Monday to Sunday, arranged so you can see today and the whole week at a glance.",
+    hoursWeekly: "Weekly opening hours",
+    today: "Today",
+    todayLabel: "Today",
+    open: "Open",
+    closed: "Closed",
+    nowOpen: "Open now",
+    nextOpening: "Next opening",
+    closesIn: "closing",
+    opensIn: "opening",
+    openUntil: " open until",
+    openAt: " opens at",
+    loadingHours: "Loading opening hours...",
+    contactMap: "Map",
+    contactTitle: "Want to contact us?",
+    address: "Address",
+    messenger: "Message us on Messenger",
+    email: "E-mail",
+    openMap: "Open in Google Maps",
+    reviewsEyebrow: "Guest reviews",
+    reviewsSummary: "Reviews summary",
+    reviewsCount: "reviews",
+    reviewsUnchecked: "Reviews are not verified",
+    ownReview: "Your review",
+    name: "Name",
+    rating: "Rating",
+    review: "Review",
+    reviewPlaceholder: "Write a few sentences about your visit.",
+    submit: "Send",
+    footerSmall: "For dine-in, takeaway and ordering.",
+    foodoraSmall: "Gyros Box Gy&ouml;ngy&ouml;s",
+    woltSmall: "Gyros Box page",
+  },
+};
+
+let currentLanguage = (() => {
+  try {
+    return window.localStorage.getItem(LANGUAGE_STORAGE_KEY) === "en" ? "en" : "hu";
+  } catch {
+    return "hu";
+  }
+})();
+
+function getText(key) {
+  return I18N[currentLanguage]?.[key] || I18N.hu[key] || "";
+}
+
+function setHtml(selector, value) {
+  const element = document.querySelector(selector);
+
+  if (element) {
+    element.innerHTML = value;
+  }
+}
+
+function getOpeningHoursDayLabel(entry) {
+  return currentLanguage === "en" ? DAY_LABELS_EN[entry.day] || entry.label : entry.label;
+}
+
+function getOpeningHoursTime(entry) {
+  if (currentLanguage === "en" && entry.closed) {
+    return "Closed";
+  }
+
+  return entry.time;
+}
+
 function canUseLocalStorage() {
   try {
     const testKey = "__gyros_box_reviews_test__";
@@ -369,11 +530,11 @@ function syncReviewsSnapshotToDom() {
   const averageRating = getAverageRatingNumber();
 
   if (title) {
-    title.innerHTML = googleReviewsSnapshot.placeName;
+    title.innerHTML = getText("reviewsEyebrow");
   }
 
   if (scoreTitle) {
-    scoreTitle.innerHTML = "V&eacute;lem&eacute;nyek &ouml;sszefoglal&aacute;sa";
+    scoreTitle.innerHTML = getText("reviewsSummary");
   }
 
   if (scoreEmpty) {
@@ -389,13 +550,12 @@ function syncReviewsSnapshotToDom() {
   }
 
   if (scoreCount) {
-    scoreCount.innerHTML = `${googleReviewsSnapshot.totalReviews} v&eacute;lem&eacute;ny`;
+    scoreCount.innerHTML = `${googleReviewsSnapshot.totalReviews} ${getText("reviewsCount")}`;
   }
 
   if (scoreMeta) {
     scoreMeta.hidden = false;
-    scoreMeta.innerHTML =
-      'A v&eacute;lem&eacute;nyek nincsenek ellen&#337;rizve <span class="reviews-score__meta-info" aria-hidden="true">i</span>';
+    scoreMeta.innerHTML = `${getText("reviewsUnchecked")} <span class="reviews-score__meta-info" aria-hidden="true">i</span>`;
   }
 
   if (scoreStars) {
@@ -536,6 +696,180 @@ const menuShowcaseCategories = [
   { id: "sides", label: "K&ouml;retek", accent: "K&ouml;ret" },
   { id: "drinks", label: "&Uuml;d&iacute;t&#337;k", accent: "&Uuml;d&iacute;t&#337;" },
 ];
+
+const menuCategoryLabelsEn = {
+  popular: "Popular",
+  "smash-burgers": "Smash burgers",
+  pitas: "Gyros pitas",
+  twists: "Twisters",
+  plates: "Gyros plates",
+  boxes: "Gyros boxes",
+  falafel: "Falafel",
+  snacks: "Snacks",
+  sides: "Sides",
+  drinks: "Drinks",
+};
+
+function getMenuCategoryLabel(category) {
+  return currentLanguage === "en" ? menuCategoryLabelsEn[category.id] || category.label : category.label;
+}
+
+const menuTextTranslationsEn = [
+  ["N\u00e9pszer\u0171", "Popular"],
+  ["Gyros t\u00e1l", "Gyros plate"],
+  ["GYROS T\u00c1L", "GYROS PLATE"],
+  ["GYROS PIT\u00c1BAN", "GYROS IN PITA"],
+  ["S\u00dcLTKRUMPLI CHEDDAR SAJTSZ\u00d3SSZAL", "FRIES WITH CHEDDAR CHEESE SAUCE"],
+  ["G\u00d6R\u00d6G GYROS T\u00c1L", "GREEK GYROS PLATE"],
+  ["Sajtos gyros t\u00e1l", "Cheese gyros plate"],
+  ["Sajtos", "Cheese"],
+  ["sajtos", "cheese"],
+  ["ny\u00e1rsr\u00f3l vagdalt f\u0171szeres csirkecombfalatok", "spiced chicken thigh slices carved from the spit"],
+  ["csirkecombfalatok", "chicken thigh pieces"],
+  ["ropog\u00f3s z\u00f6lds\u00e9gekkel", "with crisp vegetables"],
+  ["ropog\u00f3s z\u00f6lds\u00e9gek", "crisp vegetables"],
+  ["v\u00e1laszthat\u00f3 k\u00f6ret", "side of your choice"],
+  ["fejesk\u00e1poszta", "cabbage"],
+  ["lila hagyma", "red onion"],
+  ["k\u00edgy\u00f3uborka", "cucumber"],
+  ["paradicsom", "tomato"],
+  ["tzatziki\u00f6ntet", "tzatziki sauce"],
+  ["feta sajt", "feta cheese"],
+  ["olivabogy\u00f3", "olives"],
+  ["h\u00e1zi f\u0171szers\u00f3val \u00e9s amerikai cheddar sajtsz\u00f3sszal", "with house seasoning salt and American cheddar cheese sauce"],
+  ["Allerg\u00e9nek", "Allergens"],
+  ["glut\u00e9n", "gluten"],
+  ["tejterm\u00e9k", "dairy"],
+  ["tej", "milk"],
+  ["must\u00e1r", "mustard"],
+  ["sz\u00f3ja", "soy"],
+  ["toj\u00e1s", "egg"],
+  ["di\u00f3f\u00e9le", "nuts"],
+  ["szez\u00e1mmag", "sesame"],
+  ["Aktu\u00e1lis \u00e1r az \u00e9tlapon", "Current price on the menu"],
+  ["Friss aj\u00e1nlat", "Fresh pick"],
+  ["Vend\u00e9gkedvenc", "Guest favorite"],
+  ["Street food tipp", "Street food tip"],
+  ["Kieg\u00e9sz\u00edt\u0151 v\u00e1laszt\u00e9k", "Extras"],
+  ["Gyorsan elk\u00e9sz\u00fcl\u0151, n\u00e9pszer\u0171 fog\u00e1s a napi k\u00edn\u00e1latb\u00f3l.", "A quick, popular dish from the daily selection."],
+  ["Laktat\u00f3 \u00f6ssze\u00e1ll\u00edt\u00e1s friss hozz\u00e1val\u00f3kkal \u00e9s karakteres \u00edzekkel.", "A filling choice with fresh ingredients and bold flavors."],
+  ["K\u00f6nnyen v\u00e1laszthat\u00f3, n\u00e9pszer\u0171 fog\u00e1s gyors eb\u00e9dre vagy vacsor\u00e1ra.", "An easy favorite for a quick lunch or dinner."],
+  ["\u00dcd\u00edt\u0151k, k\u00f6retek \u00e9s plusz felt\u00e9tek az aktu\u00e1lis k\u00edn\u00e1lat szerint.", "Drinks, sides and extra toppings depending on the current selection."],
+  ["Sajtburger h\u00e1zi sz\u00f3sszal", "Cheeseburger with house sauce"],
+  ["Sajtburger klasszikus", "Classic cheeseburger"],
+  ["S\u00fclt krumpli cheddar sajtsz\u00f3sszal", "Fries with cheddar cheese sauce"],
+  ["S\u00fclt krumpli", "Fries"],
+  ["2 db h\u00faspog\u00e1csa, sajtszelet, uborkaszelet, grillezett hagyma, h\u00e1zi sz\u00f3sz", "2 beef patties, cheese slice, pickle slices, grilled onion, house sauce"],
+  ["2 db h\u00faspog\u00e1csa, sajtszelet, uborkaszelet, grillezett hagyma, must\u00e1r, ketchup", "2 beef patties, cheese slice, pickle slices, grilled onion, mustard, ketchup"],
+  ["2 db h\u00faspog\u00e1csa", "2 beef patties"],
+  ["sajtszelet", "cheese slice"],
+  ["uborkaszelet", "pickle slices"],
+  ["grillezett hagyma", "grilled onion"],
+  ["h\u00e1zi sz\u00f3sz", "house sauce"],
+  ["h\u00e1zi f\u0171szers\u00f3val", "with house seasoning salt"],
+  ["h\u00e1zi f\u0171szers\u00f3val \u00e9s amerikai cheddar sajtsz\u00f3sszal", "with house seasoning salt and American cheddar cheese sauce"],
+  ["Gyros pit\u00e1ban csak h\u00fassal \u00e9s sz\u00f3sszal", "Gyros in pita with meat and sauce only"],
+  ["Extra h\u00fasos gyros pit\u00e1ban", "Extra-meat gyros in pita"],
+  ["Gyros pit\u00e1ban", "Gyros in pita"],
+  ["nagy adag ny\u00e1rsr\u00f3l vagdalt f\u0171szeres csirkecombfalatok", "large portion of spiced chicken thigh slices carved from the spit"],
+  ["nagy adag", "large portion of"],
+  ["tzatziki\u00f6ntet, pita", "tzatziki sauce, pita"],
+  ["Gyros twist-gyros eredeti, g\u00f6r\u00f6g lep\u00e9nykeny\u00e9rbe csavarva", "Original gyros twist wrapped in Greek flatbread"],
+  ["Gyros twist extra h\u00fassal", "Gyros twist with extra meat"],
+  ["Gyros twist csak h\u00fassal \u00e9s sz\u00f3sszal", "Gyros twist with meat and sauce only"],
+  ["g\u00f6r\u00f6g lep\u00e9nykeny\u00e9r pir\u00edtva", "toasted Greek flatbread"],
+  ["Gyros box (kis gyros t\u00e1l)", "Gyros box (small gyros plate)"],
+  ["G\u00f6r\u00f6g gyros box (kis gyros t\u00e1l)", "Greek gyros box (small gyros plate)"],
+  ["Sajtos gyros box (kis gyros t\u00e1l)", "Cheese gyros box (small gyros plate)"],
+  ["G\u00f6r\u00f6g gyros t\u00e1l", "Greek gyros plate"],
+  ["reszelt trappista sajt", "grated Trappista cheese"],
+  ["Falafel pit\u00e1ban", "Falafel in pita"],
+  ["Falafel t\u00e1l", "Falafel plate"],
+  ["G\u00f6r\u00f6g falafel t\u00e1l", "Greek falafel plate"],
+  ["Sajtos falafel t\u00e1l", "Cheese falafel plate"],
+  ["falafelgoly\u00f3k ropog\u00f3s z\u00f6lds\u00e9gekkel", "falafel balls with crisp vegetables"],
+  ["falafelgoly\u00f3k v\u00e1laszthat\u00f3 k\u00f6rettel", "falafel balls with a side of your choice"],
+  ["falafelgoly\u00f3k", "falafel balls"],
+  ["v\u00e1laszthat\u00f3 k\u00f6rettel", "with a side of your choice"],
+  ["fejes k\u00e1poszta", "cabbage"],
+  ["tzatziki \u00f6ntettel", "with tzatziki sauce"],
+  ["tzatziki\u00f6ntettel", "with tzatziki sauce"],
+  ["pit\u00e1val", "with pita"],
+  ["feta sajttal, olivabogy\u00f3val", "with feta cheese and olives"],
+  ["feta sajttal", "with feta cheese"],
+  ["olivabogy\u00f3val", "olives"],
+  ["reszelt trappista sajttal", "with grated Trappista cheese"],
+  ["sajttal", "with cheese"],
+  ["Hagymakarika", "Onion rings"],
+  ["R\u00e1ntott trappista sajt", "Breaded Trappista cheese"],
+  ["Csirke nuggets corn flakes pan\u00edrban", "Chicken nuggets in corn flakes coating"],
+  ["Pan\u00edrozott mini csirkemellfil\u00e9 ropog\u00f3s bund\u00e1ban", "Breaded mini chicken breast fillets in crispy coating"],
+  ["Mozzarella rudacsk\u00e1k", "Mozzarella sticks"],
+  ["7db hagymakarika v\u00e1laszthat\u00f3 extr\u00e1kkal", "7 onion rings with optional extras"],
+  ["2db r\u00e1ntott trappista", "2 breaded Trappista cheese pieces"],
+  ["6db nuggets v\u00e1laszthat\u00f3 extr\u00e1kkal", "6 nuggets with optional extras"],
+  ["3db mini csirkemellfil\u00e9 v\u00e1laszthat\u00f3 extr\u00e1kkal", "3 mini chicken breast fillets with optional extras"],
+  ["5db sajtrudacska v\u00e1laszthat\u00f3 extr\u00e1kkal", "5 cheese sticks with optional extras"],
+  ["Pir\u00edtott g\u00f6r\u00f6g lep\u00e9nykeny\u00e9r", "Toasted Greek flatbread"],
+  ["Has\u00e1bburgonya", "Fries"],
+  ["\u00c9desburgonya", "Sweet potato fries"],
+  ["Friss sal\u00e1ta", "Fresh salad"],
+  ["A k\u00e9p illusztr\u00e1ci\u00f3", "Image for illustration only"],
+  ["Frissen v\u00e1gott ropog\u00f3s k\u00e1poszta, lilahagyma, k\u00edgy\u00f3uborka, paradicsom \u00f6sszeforgatva.", "Freshly cut crisp cabbage, red onion, cucumber and tomato mixed together."],
+  ["Pepsi (0,33 l) dobozos", "Pepsi (0.33 l) can"],
+  ["Pepsi max (0,33 l) dobozos", "Pepsi Max (0.33 l) can"],
+  ["Dr. Pepper (0,33 l) dobozos", "Dr. Pepper (0.33 l) can"],
+  ["Pepsi (0,5 l)", "Pepsi (0.5 l)"],
+  ["Pepsi max (0,5 l)", "Pepsi Max (0.5 l)"],
+  ["Schweppes narancs (0,5 l)", "Schweppes Orange (0.5 l)"],
+  ["Schweppes tonic (0,5 l)", "Schweppes Tonic (0.5 l)"],
+  ["Schweppes pink tonic (0,5 l)", "Schweppes Pink Tonic (0.5 l)"],
+  ["Schweppes canada dry (0,5 l)", "Schweppes Canada Dry (0.5 l)"],
+  ["Schweppes citrus mix (0,5 l)", "Schweppes Citrus Mix (0.5 l)"],
+  ["Gatorade j\u00e9gm\u00e1lna (0,5 l)", "Gatorade Ice Raspberry (0.5 l)"],
+  ["Lipton citrom (0,5 l)", "Lipton Lemon (0.5 l)"],
+  ["Lipton \u0151szibarack (0,5 l)", "Lipton Peach (0.5 l)"],
+  ["Lipton z\u00f6ld epres (0,5 l)", "Lipton Green Strawberry (0.5 l)"],
+  ["Lipton z\u00f6ld (0,5 l)", "Lipton Green Tea (0.5 l)"],
+  ["Toma meggy (0,5 l)", "Toma Sour Cherry (0.5 l)"],
+  ["Toma multivitamin (0,5 l)", "Toma Multivitamin (0.5 l)"],
+  ["Toma alma (0,5 l)", "Toma Apple (0.5 l)"],
+  ["Szentkir\u00e1lyi sz\u00e9nsavas \u00e1sv\u00e1nyv\u00edz (0,5 l)", "Szentkir\u00e1lyi sparkling mineral water (0.5 l)"],
+  ["Szentkir\u00e1lyi sz\u00e9nsavmentes \u00e1sv\u00e1nyv\u00edz (0,5 l)", "Szentkir\u00e1lyi still mineral water (0.5 l)"],
+  ["50 Ft visszav\u00e1lt\u00e1si d\u00edj", "50 Ft deposit fee"],
+  ["Ft-t\u00f3l", "Ft+"],
+  ["0,5 l", "0.5 l"],
+  ["0,33 l", "0.33 l"],
+  ["330 ml", "330 ml"],
+  ["zeller", "celery"],
+];
+
+function translateMenuTextToEnglish(value = "") {
+  if (currentLanguage !== "en" || !value) {
+    return value;
+  }
+
+  return [...menuTextTranslationsEn]
+    .sort((first, second) => second[0].length - first[0].length)
+    .reduce((currentValue, [from, to]) => currentValue.split(from).join(to), value);
+}
+
+function translateMenuTextNodesToEnglish(root) {
+  if (currentLanguage !== "en" || !root) {
+    return;
+  }
+
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  const nodes = [];
+
+  while (walker.nextNode()) {
+    nodes.push(walker.currentNode);
+  }
+
+  nodes.forEach((node) => {
+    node.nodeValue = translateMenuTextToEnglish(node.nodeValue);
+  });
+}
 
 const menuShowcaseSlots = [
   {
@@ -1211,11 +1545,11 @@ function openPopularMenuModal(itemId, trigger) {
     image.alt = "";
   }
 
-  title.innerHTML = item.name;
+  title.innerHTML = translateMenuTextToEnglish(item.name);
   price.textContent = item.price;
   description.innerHTML = `
-    ${item.description}
-    <span class="popular-menu-modal__allergens"><strong>Allerg&eacute;nek:</strong> ${item.allergens}</span>
+    ${translateMenuTextToEnglish(item.description)}
+    <span class="popular-menu-modal__allergens"><strong>${currentLanguage === "en" ? "Allergens:" : "Allerg&eacute;nek:"}</strong> ${translateMenuTextToEnglish(item.allergens)}</span>
   `;
   modal.__lastTrigger = trigger instanceof HTMLElement ? trigger : document.activeElement;
   modal.hidden = false;
@@ -1689,7 +2023,7 @@ function renderReviews() {
     reviewsButton.setAttribute("aria-selected", "false");
     reviewsButton.setAttribute("tabindex", "-1");
     reviewsButton.dataset.viewTarget = "reviews";
-    reviewsButton.innerHTML = "V&eacute;lem&eacute;nyek";
+    reviewsButton.innerHTML = getText("navReviews");
     nav.insertBefore(reviewsButton, contactButton || null);
   }
 
@@ -1704,7 +2038,7 @@ function renderReviews() {
     reviewsPanel.innerHTML = `
       <div class="view-panel__section">
         <div class="section-heading section-heading--sub reviews-heading reveal">
-          <p class="eyebrow">Vend&eacute;gv&eacute;lem&eacute;nyek</p>
+          <p class="eyebrow" id="reviews-panel-title">${getText("reviewsEyebrow")}</p>
         </div>
 
         <section class="panel panel--accent reviews-composer reveal" aria-label="V&eacute;lem&eacute;nyek &ouml;sszes&iacute;t&eacute;se &eacute;s bek&uuml;ld&eacute;se">
@@ -1718,11 +2052,11 @@ function renderReviews() {
                 </span>
                 <span class="reviews-google-chip__count" id="reviews-google-chip-count">(${googleReviewsSnapshot.totalReviews})</span>
               </a>
-              <h3 class="reviews-score__title" id="reviews-score-title">V&eacute;lem&eacute;nyek &ouml;sszefoglal&aacute;sa</h3>
+              <h3 class="reviews-score__title" id="reviews-score-title">${getText("reviewsSummary")}</h3>
             </div>
             <div class="reviews-score__empty" id="reviews-score-empty" hidden></div>
             <p class="reviews-score__meta" id="reviews-score-meta">
-              A v&eacute;lem&eacute;nyek nincsenek ellen&#337;rizve <span class="reviews-score__meta-info" aria-hidden="true">i</span>
+              ${getText("reviewsUnchecked")} <span class="reviews-score__meta-info" aria-hidden="true">i</span>
             </p>
             <div class="reviews-score__distribution" id="reviews-score-distribution"></div>
             <div class="reviews-score__stats reviews-score__stats--refined" id="reviews-score-stats">
@@ -1732,28 +2066,28 @@ function renderReviews() {
               <div class="reviews-stars reviews-stars--summary" id="reviews-score-stars">
                 ${buildStarsMarkup(0)}
               </div>
-              <p class="reviews-score__count" id="reviews-score-count">${googleReviewsSnapshot.totalReviews} v&eacute;lem&eacute;ny</p>
+              <p class="reviews-score__count" id="reviews-score-count">${googleReviewsSnapshot.totalReviews} ${getText("reviewsCount")}</p>
             </div>
           </article>
 
           <section class="reviews-form reviews-form--inline" id="reviews-form-panel" aria-label="Saj&aacute;t v&eacute;lem&eacute;ny &iacute;r&aacute;sa">
-            <p class="eyebrow">Saj&aacute;t v&eacute;lem&eacute;ny</p>
+            <p class="eyebrow">${getText("ownReview")}</p>
             <form class="reviews-form__grid" id="reviews-form" novalidate>
               <label class="reviews-form__field" for="reviews-name">
-                <span>N&eacute;v</span>
+                <span>${getText("name")}</span>
                 <input
                   id="reviews-name"
                   name="name"
                   type="text"
                   maxlength="40"
                   autocomplete="name"
-                  placeholder="Hogy h&iacute;vhatunk?"
+                  placeholder="${currentLanguage === "en" ? "Your name" : "Hogy h&iacute;vhatunk?"}"
                   required
                 />
               </label>
 
               <label class="reviews-form__field reviews-form__field--rating" for="reviews-rating">
-                <span>&Eacute;rt&eacute;kel&eacute;s</span>
+                <span>${getText("rating")}</span>
                 <input id="reviews-rating" name="rating" type="hidden" value="" required />
                 <div class="reviews-rating-picker-wrap">
                   <div class="reviews-rating-picker" role="radiogroup" aria-label="&Eacute;rt&eacute;kel&eacute;s">
@@ -1767,13 +2101,13 @@ function renderReviews() {
               </label>
 
               <label class="reviews-form__field reviews-form__field--full" for="reviews-text">
-                <span>V&eacute;lem&eacute;ny</span>
+                <span>${getText("review")}</span>
                 <textarea
                   id="reviews-text"
                   name="text"
                   rows="5"
                   maxlength="400"
-                  placeholder="&Iacute;rd meg p&aacute;r mondatban, milyen volt."
+                  placeholder="${getText("reviewPlaceholder")}"
                   required
                 ></textarea>
                 <p class="reviews-form__counter" id="reviews-text-counter" aria-live="polite">0 karakter / 0 sz&oacute;</p>
@@ -1782,7 +2116,7 @@ function renderReviews() {
               <div class="reviews-form__actions reviews-form__field--full">
                 <p class="reviews-form__message" id="reviews-form-message" aria-live="polite"></p>
                 <button class="button button--primary" id="reviews-submit" type="submit">
-                  K&uuml;ld&eacute;s
+                  ${getText("submit")}
                 </button>
               </div>
             </form>
@@ -1923,19 +2257,23 @@ function renderMenu() {
             </div>
 
             <div class="menu-hero__copy">
-              <p class="menu-hero__eyebrow">Online &eacute;tlap</p>
+              <p class="menu-hero__eyebrow">${currentLanguage === "en" ? "Online menu" : "Online &eacute;tlap"}</p>
               <h2>Gyros Box Gy&ouml;ngy&ouml;s</h2>
-              <p class="menu-hero__lead">Friss alapanyagokb&oacute;l, gyorsan, helyben elk&eacute;sz&iacute;tve!</p>
+              <p class="menu-hero__lead">${
+                currentLanguage === "en"
+                  ? "Fresh ingredients, fast service, prepared on-site."
+                  : "Friss alapanyagokb&oacute;l, gyorsan, helyben elk&eacute;sz&iacute;tve!"
+              }</p>
             </div>
           </div>
         </div>
 
         <div class="menu-hero__meta">
-          <span>4,9 Google &eacute;rt&eacute;kel&eacute;s</span>
+          <span>${currentLanguage === "en" ? "4.9 Google rating" : "4,9 Google &eacute;rt&eacute;kel&eacute;s"}</span>
           <span>2000-4000 Ft</span>
-          <span>Nyitva: 10:00-18:00</span>
+          <span>${currentLanguage === "en" ? "Open: 10:00-18:00" : "Nyitva: 10:00-18:00"}</span>
           <span>Gy&ouml;ngy&ouml;s, Kossuth Lajos u. 5.</span>
-          <span>Helyben, elvitelre &eacute;s rendel&eacute;sre</span>
+          <span>${currentLanguage === "en" ? "Dine-in, takeaway and ordering" : "Helyben, elvitelre &eacute;s rendel&eacute;sre"}</span>
         </div>
       </div>
     `;
@@ -1949,7 +2287,7 @@ function renderMenu() {
     const isBurgerCategory = activeCategory.id === "smash-burgers";
 
     const filtersMarkup = `
-      <div class="menu-showcase__filters" role="tablist" aria-label="Étlap kategóriák">
+      <div class="menu-showcase__filters" role="tablist" aria-label="${currentLanguage === "en" ? "Menu categories" : "Étlap kategóriák"}">
         ${menuShowcaseCategories
           .map(
             (category) => `
@@ -1958,7 +2296,7 @@ function renderMenu() {
                 type="button"
                 data-menu-category="${category.id}"
               >
-                ${category.label}
+                ${getMenuCategoryLabel(category)}
               </button>
             `,
           )
@@ -1989,7 +2327,7 @@ function renderMenu() {
                       <p>${item.description}</p>
                     </div>
                     <div class="popular-card__footer">
-                      <p class="popular-card__allergens"><span>Allerg&eacute;nek:</span> ${item.allergens}</p>
+                      <p class="popular-card__allergens"><span>${currentLanguage === "en" ? "Allergens:" : "Allerg&eacute;nek:"}</span> ${item.allergens}</p>
                       <strong>${item.cardPrice}</strong>
                     </div>
                   </div>
@@ -2029,7 +2367,7 @@ function renderMenu() {
                         ${item.note ? `<p class="popular-card__note">${item.note}</p>` : ""}
                       </div>
                       <div class="popular-card__footer">
-                        ${item.allergens ? `<p class="popular-card__allergens"><span>Allerg&eacute;nek:</span> ${item.allergens}</p>` : ""}
+                        ${item.allergens ? `<p class="popular-card__allergens"><span>${currentLanguage === "en" ? "Allergens:" : "Allerg&eacute;nek:"}</span> ${item.allergens}</p>` : ""}
                         <div class="popular-card__meta">
                           <strong>${item.cardPrice}</strong>
                           ${badgeLabel ? `<span class="popular-card__badge">${badgeLabel}</span>` : ""}
@@ -2087,6 +2425,8 @@ function renderMenu() {
         renderActiveCategory(button.dataset.menuCategory);
       });
     });
+
+    translateMenuTextNodesToEnglish(menuGrid);
   }
 
   renderActiveCategory(menuShowcaseCategories[0].id);
@@ -2300,11 +2640,11 @@ function renderOpeningHoursLive() {
       const todayBadges = isToday
         ? `
             <span class="hours-row__badge hours-row__badge--state ${isOpenNow ? "is-open" : "is-closed"}">
-              ${isOpenNow ? "Nyitva" : "Z\u00e1rva"}
+              ${isOpenNow ? getText("open") : getText("closed")}
             </span>
           `
         : "";
-      const titleMarkup = isToday ? `<strong>${displayEntry.label}</strong>` : `<strong>${displayEntry.label}</strong>`;
+      const titleMarkup = `<strong>${getOpeningHoursDayLabel(displayEntry)}</strong>`;
 
       return `
         <div class="${rowClasses}">
@@ -2312,7 +2652,7 @@ function renderOpeningHoursLive() {
             ${titleMarkup}
             ${todayBadges}
           </div>
-          <span class="hours-row__time">${displayEntry.time}</span>
+          <span class="hours-row__time">${getOpeningHoursTime(displayEntry)}</span>
         </div>
       `;
     })
@@ -2322,32 +2662,43 @@ function renderOpeningHoursLive() {
   todayCard.classList.remove("is-open-now", "is-closed-now");
 
   if (!todayData) {
-    countdown.state.textContent = "\u00c1llapot";
-    countdown.target.textContent = "Nyitvatart\u00e1s hamarosan";
+    countdown.state.textContent = currentLanguage === "en" ? "Status" : "\u00c1llapot";
+    countdown.target.innerHTML = getText("loadingHours");
     countdown.time.textContent = "--:--:--";
-    countdown.unit.textContent = "friss\u00fcl";
-    countdown.note.textContent = "A k\u00f6vetkez\u0151 nyit\u00e1s ideje m\u00e9g nincs be\u00e1ll\u00edtva.";
+    countdown.unit.textContent = currentLanguage === "en" ? "loading" : "friss\u00fcl";
+    countdown.note.textContent =
+      currentLanguage === "en"
+        ? "The next opening time has not been set yet."
+        : "A k\u00f6vetkez\u0151 nyit\u00e1s ideje m\u00e9g nincs be\u00e1ll\u00edtva.";
     setOpeningHoursCountdownProgress(countdown.progress, 0.08);
-    todayName.textContent = "Mai nap";
+    todayName.innerHTML = getText("todayLabel");
     todayTime.textContent = "--";
-    todayNote.textContent = "A mai nyitvatart\u00e1s pillanatnyilag nem \u00e9rhet\u0151 el.";
-    weekCaption.textContent = "Heti \u00e1ttekint\u00e9s";
+    todayNote.textContent =
+      currentLanguage === "en"
+        ? "Today's opening hours are currently unavailable."
+        : "A mai nyitvatart\u00e1s pillanatnyilag nem \u00e9rhet\u0151 el.";
+    weekCaption.textContent = currentLanguage === "en" ? "Weekly overview" : "Heti \u00e1ttekint\u00e9s";
     return;
   }
 
-  todayName.textContent = todayData.label;
-  todayTime.textContent = todayData.time;
-  weekCaption.textContent = `Ma: ${todayData.label}`;
+  todayName.textContent = getOpeningHoursDayLabel(todayData);
+  todayTime.textContent = getOpeningHoursTime(todayData);
+  weekCaption.textContent = `${getText("today")}: ${getOpeningHoursDayLabel(todayData)}`;
 
   if (!nextWindow) {
     status.classList.add("is-unknown");
-    countdown.state.textContent = "\u00c1llapot";
-    countdown.target.textContent = "Nincs k\u00f6zelg\u0151 nyit\u00e1s";
+    countdown.state.textContent = currentLanguage === "en" ? "Status" : "\u00c1llapot";
+    countdown.target.textContent = currentLanguage === "en" ? "No upcoming opening" : "Nincs k\u00f6zelg\u0151 nyit\u00e1s";
     countdown.time.textContent = "--:--:--";
-    countdown.unit.textContent = "v\u00e1runk";
-    countdown.note.textContent = "A k\u00f6vetkez\u0151 nyit\u00e1si id\u0151pont jelenleg nincs megadva.";
+    countdown.unit.textContent = currentLanguage === "en" ? "waiting" : "v\u00e1runk";
+    countdown.note.textContent =
+      currentLanguage === "en"
+        ? "The next opening time is not available right now."
+        : "A k\u00f6vetkez\u0151 nyit\u00e1si id\u0151pont jelenleg nincs megadva.";
     setOpeningHoursCountdownProgress(countdown.progress, 0.08);
-    todayNote.textContent = todayOverride?.note || "A mai nyitvatart\u00e1s jelenleg nem meghat\u00e1rozhat\u00f3.";
+    todayNote.textContent = todayOverride?.note || (currentLanguage === "en"
+      ? "Today's opening hours cannot be determined right now."
+      : "A mai nyitvatart\u00e1s jelenleg nem meghat\u00e1rozhat\u00f3.");
     return;
   }
 
@@ -2355,11 +2706,13 @@ function renderOpeningHoursLive() {
   todayCard.classList.add(isOpenNow ? "is-open-now" : "is-closed-now");
 
   if (isOpenNow) {
-    countdown.state.textContent = "Most nyitva";
-    countdown.target.textContent = `${nextWindow.schedule.close}-ig nyitva`;
+    countdown.state.innerHTML = getText("nowOpen");
+    countdown.target.textContent = currentLanguage === "en"
+      ? `Closes at ${nextWindow.schedule.close}`
+      : `${nextWindow.schedule.close}-ig nyitva`;
     countdown.time.textContent = formatOpeningHoursCountdown(nextWindow.closeAt - now);
-    countdown.unit.textContent = "z\u00e1r\u00e1sig";
-    countdown.note.textContent = `Ma ${todayData.time}.`;
+    countdown.unit.innerHTML = getText("closesIn");
+    countdown.note.textContent = currentLanguage === "en" ? `Today ${todayData.time}.` : `Ma ${todayData.time}.`;
     setOpeningHoursCountdownProgress(countdown.progress, 1);
   } else {
     const previousClose = findPreviousOpeningHoursClose(now);
@@ -2368,13 +2721,19 @@ function renderOpeningHoursLive() {
     const elapsedDuration = now - progressStart;
     const isSameDayOpening = getDateKey(nextWindow.openAt) === getDateKey(now);
 
-    countdown.state.textContent = "K\u00f6vetkez\u0151 nyit\u00e1s";
-    countdown.target.textContent = `${nextWindow.schedule.open}-kor nyitunk`;
+    countdown.state.innerHTML = getText("nextOpening");
+    countdown.target.textContent = currentLanguage === "en"
+      ? `Opens at ${nextWindow.schedule.open}`
+      : `${nextWindow.schedule.open}-kor nyitunk`;
     countdown.time.textContent = formatOpeningHoursCountdown(nextWindow.openAt - now);
-    countdown.unit.textContent = "nyit\u00e1sig";
+    countdown.unit.innerHTML = getText("opensIn");
     countdown.note.textContent = isSameDayOpening
-      ? `Ma ${nextWindow.schedule.open}-kor nyitunk.`
-      : `Legk\u00f6zelebb ${nextWindow.schedule.label} ${nextWindow.schedule.open}-kor nyitunk.`;
+      ? (currentLanguage === "en"
+        ? `We open today at ${nextWindow.schedule.open}.`
+        : `Ma ${nextWindow.schedule.open}-kor nyitunk.`)
+      : (currentLanguage === "en"
+        ? `Next opening: ${getOpeningHoursDayLabel(nextWindow.schedule)} at ${nextWindow.schedule.open}.`
+        : `Legk\u00f6zelebb ${nextWindow.schedule.label} ${nextWindow.schedule.open}-kor nyitunk.`);
     setOpeningHoursCountdownProgress(
       countdown.progress,
       totalDuration > 0 ? elapsedDuration / totalDuration : 0,
@@ -2385,10 +2744,12 @@ function renderOpeningHoursLive() {
   todayNote.textContent = todayOverride?.note
     ? todayOverride.note
     : todayData.closed
-      ? `Legk\u00f6zelebb ${nextWindow.schedule.label} ${nextWindow.schedule.open}-kor nyitunk.`
+      ? (currentLanguage === "en"
+        ? `Next opening: ${getOpeningHoursDayLabel(nextWindow.schedule)} at ${nextWindow.schedule.open}.`
+        : `Legk\u00f6zelebb ${nextWindow.schedule.label} ${nextWindow.schedule.open}-kor nyitunk.`)
       : isOpenNow
-        ? `Ma ${todayData.close}-ig v\u00e1runk.`
-        : `Ma ${todayData.open}-kor nyitunk.`;
+        ? (currentLanguage === "en" ? `Open today until ${todayData.close}.` : `Ma ${todayData.close}-ig v\u00e1runk.`)
+        : (currentLanguage === "en" ? `We open today at ${todayData.open}.` : `Ma ${todayData.open}-kor nyitunk.`);
 }
 
 function initOpeningHoursTicker() {
@@ -2610,6 +2971,143 @@ function initGalleryLightbox() {
   });
 }
 
+function buildLanguageSwitch(className) {
+  const switcher = document.createElement("div");
+  switcher.className = className;
+  switcher.setAttribute("aria-label", getText("languageLabel"));
+  switcher.innerHTML = `
+    <button type="button" data-language-option="hu" aria-label="Magyar nyelv">
+      <span class="flag-icon flag-icon--hu" aria-hidden="true"></span>
+    </button>
+    <button type="button" data-language-option="en" aria-label="English language">
+      <span class="flag-icon flag-icon--en" aria-hidden="true"></span>
+    </button>
+  `;
+  return switcher;
+}
+
+function syncLanguageSwitches() {
+  document.documentElement.lang = currentLanguage;
+  document.querySelectorAll("[data-language-option]").forEach((button) => {
+    const isActive = button.dataset.languageOption === currentLanguage;
+    button.classList.toggle("is-active", isActive);
+    button.setAttribute("aria-pressed", isActive ? "true" : "false");
+  });
+}
+
+function setLanguage(language) {
+  currentLanguage = language === "en" ? "en" : "hu";
+
+  try {
+    window.localStorage.setItem(LANGUAGE_STORAGE_KEY, currentLanguage);
+  } catch {
+    // Saving the preference is optional.
+  }
+
+  applyLanguage();
+}
+
+function ensureLanguageControls(topbarPanel, sideActions) {
+  if (sideActions && !sideActions.querySelector(".language-switch")) {
+    sideActions.prepend(buildLanguageSwitch("language-switch"));
+  }
+
+  if (topbarPanel && !topbarPanel.querySelector(".mobile-language-switch")) {
+    topbarPanel.prepend(buildLanguageSwitch("mobile-language-switch"));
+  }
+
+  document.querySelectorAll("[data-language-option]").forEach((button) => {
+    if (button.dataset.languageReady === "true") {
+      return;
+    }
+
+    button.dataset.languageReady = "true";
+    button.addEventListener("click", () => {
+      setLanguage(button.dataset.languageOption);
+    });
+  });
+
+  syncLanguageSwitches();
+}
+
+function applyLanguage() {
+  const metaDescription = document.querySelector('meta[name="description"]');
+  document.title = getText("title");
+
+  if (metaDescription) {
+    metaDescription.setAttribute("content", getText("description"));
+  }
+
+  if (typeof renderMenu === "function") {
+    renderMenu();
+  }
+
+  setHtml(".mobile-preview-fab", getText("preview"));
+  setHtml('[data-view-target="intro"]', getText("navIntro"));
+  setHtml('[data-view-target="menu"]', getText("navMenu"));
+  setHtml('[data-view-target="hours"]', getText("navHours"));
+  setHtml('[data-view-target="reviews"]', getText("navReviews"));
+  setHtml('[data-view-target="contact"]', getText("navContact"));
+  setHtml(".nav-cta__label", getText("order"));
+  setHtml(".mobile-order-button", getText("order"));
+  setHtml(".hero .eyebrow", getText("heroEyebrow"));
+  setHtml(".hero__lead", getText("heroLead"));
+  setHtml(".hero__copy", getText("heroCopy"));
+  setHtml(".hero__actions .button--primary", getText("menuButton"));
+  setHtml(".hero__actions .button--secondary", getText("contactButton"));
+  setHtml(".hero__tags span:nth-child(1)", getText("dineIn"));
+  setHtml(".hero__tags span:nth-child(2)", getText("takeaway"));
+  setHtml(".hero__tags span:nth-child(3)", getText("delivery"));
+  setHtml(".intro-gallery-cue__eyebrow", getText("cueEyebrow"));
+  setHtml(".intro-gallery-cue strong", getText("cueTitle"));
+  setHtml(".hours-hero h2", getText("hoursTitle"));
+  setHtml(".hours-hero > p", getText("hoursIntro"));
+  setHtml(".hours-card__head strong", getText("hoursWeekly"));
+  setHtml("#panel-contact .section-heading .eyebrow", getText("contactMap"));
+  setHtml(".map-info-card > .eyebrow", getText("contactTitle"));
+  setHtml(".contact-actions .button--primary", getText("openMap"));
+  setHtml("#reviews-panel-title", getText("reviewsEyebrow"));
+  setHtml("#reviews-score-title", getText("reviewsSummary"));
+  setHtml("#reviews-form-panel .eyebrow", getText("ownReview"));
+  setHtml('label[for="reviews-name"] > span', getText("name"));
+  setHtml('label[for="reviews-rating"] > span', getText("rating"));
+  setHtml('label[for="reviews-text"] > span', getText("review"));
+  setHtml("#reviews-submit", getText("submit"));
+  setHtml(".footer small", getText("footerSmall"));
+
+  document.querySelectorAll(".mobile-order-text small").forEach((item, index) => {
+    item.innerHTML = index === 0 ? getText("foodoraSmall") : getText("woltSmall");
+  });
+
+  document.querySelectorAll(".order-link__text span").forEach((item, index) => {
+    item.innerHTML = index === 0 ? getText("foodoraSmall") : getText("woltSmall");
+  });
+
+  const reviewText = document.getElementById("reviews-text");
+  if (reviewText) {
+    reviewText.setAttribute("placeholder", getText("reviewPlaceholder"));
+  }
+
+  const contactLabelSelectors = [
+    ".map-info-item:nth-child(1) .map-info-item__content span",
+    ".map-info-item:nth-child(3) .map-info-item__content a",
+    ".map-info-item:nth-child(4) .map-info-item__content span",
+  ];
+  setHtml(contactLabelSelectors[0], getText("address"));
+  setHtml(contactLabelSelectors[1], getText("messenger"));
+  setHtml(contactLabelSelectors[2], getText("email"));
+
+  syncLanguageSwitches();
+
+  if (typeof renderOpeningHoursLive === "function") {
+    renderOpeningHoursLive();
+  }
+
+  if (typeof syncReviewsSnapshotToDom === "function") {
+    syncReviewsSnapshotToDom();
+  }
+}
+
 function enhanceTopbarLayout() {
   const topbar = document.querySelector(".topbar");
   const brand = topbar?.querySelector(".brand");
@@ -2687,7 +3185,7 @@ function initTopbar() {
   }
 
   if (navCta) {
-    navCta.innerHTML = "<span class='nav-cta__label'>Rendel&eacute;s lead&aacute;sa</span>";
+    navCta.innerHTML = `<span class='nav-cta__label'>${getText("order")}</span>`;
     navCta.setAttribute("aria-label", "Rendeles leadasa");
     navCta.setAttribute("aria-expanded", "false");
     navCta.setAttribute("aria-haspopup", "true");
@@ -2736,6 +3234,8 @@ function initTopbar() {
   if (navCtaGroup && sideActions && navCtaGroup.parentElement !== sideActions) {
     sideActions.prepend(navCtaGroup);
   }
+
+  ensureLanguageControls(topbarPanel, sideActions);
 
   function closeOrderMenu() {
     if (!orderMenu || !navCta) {
@@ -3052,6 +3552,7 @@ setYear();
 enhanceHeroActions();
 applyIntroOnlyTopbarPreview();
 initTopbar();
+applyLanguage();
 initReveal();
 initGalleryLightbox();
 initViews();
