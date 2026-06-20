@@ -16,6 +16,52 @@ const REVIEW_CACHE_TTL_MS = Number(process.env.GOOGLE_BUSINESS_CACHE_TTL_MS || 3
 const BUSINESS_SCOPE = "https://www.googleapis.com/auth/business.manage";
 const oauthStates = new Map();
 const reviewsCache = new Map();
+const rateLimitBuckets = new Map();
+
+const SECURITY_HEADERS = {
+  "Content-Security-Policy": [
+    "default-src 'self'",
+    "script-src 'self'",
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+    "font-src 'self' https://fonts.gstatic.com",
+    "img-src 'self' data: https:",
+    "frame-src 'self' https://www.google.com https://maps.google.com",
+    "connect-src 'self'",
+    "base-uri 'self'",
+    "form-action 'self'",
+    "frame-ancestors 'self'",
+    "object-src 'none'",
+  ].join("; "),
+  "Permissions-Policy": "camera=(), microphone=(), payment=(), usb=(), geolocation=(self)",
+  "Referrer-Policy": "strict-origin-when-cross-origin",
+  "X-Content-Type-Options": "nosniff",
+  "X-Frame-Options": "SAMEORIGIN",
+};
+
+const RATE_LIMITS = {
+  googleBusinessRead: { windowMs: 60 * 1000, max: 20 },
+  googleBusinessRefresh: { windowMs: 5 * 60 * 1000, max: 2 },
+  oauthStart: { windowMs: 5 * 60 * 1000, max: 4 },
+  siteReviewsPost: { windowMs: 60 * 1000, max: 8 },
+};
+
+const BLOCKED_STATIC_SEGMENTS = new Set([
+  ".agents",
+  ".codex",
+  ".data",
+  ".git",
+  ".github",
+  "node_modules",
+]);
+
+const BLOCKED_STATIC_FILES = new Set([
+  ".env",
+  ".env.development",
+  ".env.local",
+  ".env.production",
+  "google-business-token.json",
+  "site-reviews.json",
+]);
 
 loadDotEnv(path.join(ROOT, ".env"));
 
@@ -75,30 +121,111 @@ function httpError(statusCode, message, details) {
   return error;
 }
 
+function withSecurityHeaders(headers = {}) {
+  return {
+    ...SECURITY_HEADERS,
+    ...headers,
+  };
+}
+
+function getClientIp(request) {
+  const forwardedFor = request.headers["x-forwarded-for"];
+  const forwardedValue = Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor || "";
+  return (forwardedValue.split(",")[0] || request.socket.remoteAddress || "unknown").trim();
+}
+
+function checkRateLimit(request, key, options) {
+  const now = Date.now();
+  const bucketKey = `${key}:${getClientIp(request)}`;
+  const bucket = rateLimitBuckets.get(bucketKey);
+
+  if (!bucket || now - bucket.startedAt > options.windowMs) {
+    rateLimitBuckets.set(bucketKey, {
+      count: 1,
+      startedAt: now,
+    });
+    return;
+  }
+
+  bucket.count += 1;
+
+  if (bucket.count > options.max) {
+    throw httpError(429, "Tul sok keres. Kerlek, probald ujra kesobb.");
+  }
+
+  if (rateLimitBuckets.size > 1000) {
+    for (const [existingKey, existingBucket] of rateLimitBuckets.entries()) {
+      if (now - existingBucket.startedAt > 10 * 60 * 1000) {
+        rateLimitBuckets.delete(existingKey);
+      }
+    }
+  }
+}
+
+function isLocalRequest(request) {
+  const host = String(request.headers.host || "").split(":")[0].toLowerCase();
+  const remoteAddress = String(request.socket.remoteAddress || "");
+
+  return (
+    host === "localhost" ||
+    host === "127.0.0.1" ||
+    host === "::1" ||
+    remoteAddress === "127.0.0.1" ||
+    remoteAddress === "::1" ||
+    remoteAddress === "::ffff:127.0.0.1"
+  );
+}
+
+function requireGoogleBusinessApiAccess(request) {
+  const expectedToken = process.env.GOOGLE_BUSINESS_ADMIN_TOKEN || "";
+
+  if (expectedToken) {
+    const providedHeader = request.headers["x-admin-token"];
+    const providedToken = Array.isArray(providedHeader) ? providedHeader[0] : providedHeader || "";
+    const expectedBuffer = Buffer.from(expectedToken);
+    const providedBuffer = Buffer.from(providedToken);
+
+    if (
+      expectedBuffer.length === providedBuffer.length &&
+      crypto.timingSafeEqual(expectedBuffer, providedBuffer)
+    ) {
+      return;
+    }
+
+    throw httpError(401, "Hianyzik vagy ervenytelen az admin API token.");
+  }
+
+  if (isLocalRequest(request)) {
+    return;
+  }
+
+  throw httpError(403, "A Google Business API vegpontok csak helyben vagy admin tokennel erhetoek el.");
+}
+
 function sendJson(response, statusCode, payload) {
   const body = JSON.stringify(payload, null, 2);
-  response.writeHead(statusCode, {
+  response.writeHead(statusCode, withSecurityHeaders({
     "Cache-Control": "no-store",
     "Content-Length": Buffer.byteLength(body),
     "Content-Type": "application/json; charset=utf-8",
-  });
+  }));
   response.end(body);
 }
 
 function sendHtml(response, statusCode, html) {
-  response.writeHead(statusCode, {
+  response.writeHead(statusCode, withSecurityHeaders({
     "Cache-Control": "no-store",
     "Content-Length": Buffer.byteLength(html),
     "Content-Type": "text/html; charset=utf-8",
-  });
+  }));
   response.end(html);
 }
 
 function redirect(response, location) {
-  response.writeHead(302, {
+  response.writeHead(302, withSecurityHeaders({
     Location: location,
     "Cache-Control": "no-store",
-  });
+  }));
   response.end();
 }
 
@@ -718,6 +845,11 @@ async function handleLocations(request, response, url) {
 async function handleReviews(request, response, url) {
   const accessToken = await getAccessToken(request);
   const forceRefresh = url.searchParams.get("refresh") === "1";
+
+  if (forceRefresh) {
+    checkRateLimit(request, "google-business-refresh", RATE_LIMITS.googleBusinessRefresh);
+  }
+
   const location = await resolveLocation(accessToken, request);
   const reviewsPayload = await fetchAllReviews(
     accessToken,
@@ -741,6 +873,8 @@ async function handleSiteReviewsGet(response) {
 }
 
 async function handleSiteReviewsPost(request, response) {
+  checkRateLimit(request, "site-reviews-post", RATE_LIMITS.siteReviewsPost);
+
   const body = await readJsonBody(request);
   const newReview = sanitizeStoredSiteReview(
     {
@@ -781,18 +915,33 @@ async function handleSiteReviewsPost(request, response) {
 
 function resolveStaticPath(pathname) {
   const relativePath = pathname === "/" ? "index.html" : pathname.replace(/^\/+/, "");
-  const filePath = path.join(ROOT, relativePath);
-  const normalizedRoot = path.resolve(ROOT);
-  const normalizedFilePath = path.resolve(filePath);
+  const normalizedFilePath = path.resolve(ROOT, relativePath);
+  const relativeFromRoot = path.relative(ROOT, normalizedFilePath);
+  const pathSegments = relativeFromRoot.split(path.sep).filter(Boolean);
+  const fileName = pathSegments[pathSegments.length - 1] || "";
 
-  if (!normalizedFilePath.startsWith(normalizedRoot)) {
+  if (
+    !relativeFromRoot ||
+    relativeFromRoot.startsWith("..") ||
+    path.isAbsolute(relativeFromRoot)
+  ) {
     throw httpError(403, "Tiltott fajl eleres.");
+  }
+
+  if (
+    pathSegments.some((segment) => BLOCKED_STATIC_SEGMENTS.has(segment)) ||
+    BLOCKED_STATIC_FILES.has(fileName.toLowerCase()) ||
+    fileName.toLowerCase().startsWith(".env.")
+  ) {
+    throw httpError(404, "A kert fajl nem talalhato.");
   }
 
   return normalizedFilePath;
 }
 
-async function serveStaticFile(response, pathname) {
+async function serveStaticFile(response, urlOrPathname) {
+  const pathname = typeof urlOrPathname === "string" ? urlOrPathname : urlOrPathname.pathname;
+  const searchParams = typeof urlOrPathname === "string" ? new URLSearchParams() : urlOrPathname.searchParams;
   let filePath = resolveStaticPath(pathname);
 
   try {
@@ -806,11 +955,21 @@ async function serveStaticFile(response, pathname) {
     const extension = path.extname(filePath).toLowerCase();
     const contentType = MIME_TYPES[extension] || "application/octet-stream";
 
-    response.writeHead(200, {
+    const responseHeaders = withSecurityHeaders({
       "Cache-Control": extension === ".html" ? "no-cache" : "public, max-age=31536000, immutable",
       "Content-Length": fileBuffer.length,
       "Content-Type": contentType,
     });
+
+    if (
+      extension === ".html" &&
+      path.basename(filePath).toLowerCase() === "index.html" &&
+      searchParams.get("mobile-preview") === "1"
+    ) {
+      delete responseHeaders["X-Frame-Options"];
+    }
+
+    response.writeHead(200, responseHeaders);
     response.end(fileBuffer);
   } catch (error) {
     if (error.code === "ENOENT") {
@@ -847,11 +1006,15 @@ const server = http.createServer(async (request, response) => {
     }
 
     if (url.pathname === "/api/google-business/status") {
+      requireGoogleBusinessApiAccess(request);
+      checkRateLimit(request, "google-business-read", RATE_LIMITS.googleBusinessRead);
       await handleStatus(request, response);
       return;
     }
 
     if (url.pathname === "/api/google-business/oauth/start") {
+      requireGoogleBusinessApiAccess(request);
+      checkRateLimit(request, "oauth-start", RATE_LIMITS.oauthStart);
       redirect(response, buildOauthStartUrl(request));
       return;
     }
@@ -862,21 +1025,27 @@ const server = http.createServer(async (request, response) => {
     }
 
     if (url.pathname === "/api/google-business/accounts") {
+      requireGoogleBusinessApiAccess(request);
+      checkRateLimit(request, "google-business-read", RATE_LIMITS.googleBusinessRead);
       await handleAccounts(request, response);
       return;
     }
 
     if (url.pathname === "/api/google-business/locations") {
+      requireGoogleBusinessApiAccess(request);
+      checkRateLimit(request, "google-business-read", RATE_LIMITS.googleBusinessRead);
       await handleLocations(request, response, url);
       return;
     }
 
     if (url.pathname === "/api/google-business/reviews") {
+      requireGoogleBusinessApiAccess(request);
+      checkRateLimit(request, "google-business-read", RATE_LIMITS.googleBusinessRead);
       await handleReviews(request, response, url);
       return;
     }
 
-    await serveStaticFile(response, url.pathname);
+    await serveStaticFile(response, url);
   } catch (error) {
     if (url.pathname.startsWith("/api/")) {
       sendApiError(response, error);
